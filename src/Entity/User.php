@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -19,6 +20,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Length(min="8", minMessage="Votre pseudo doit au minimum contenir 8 caractères")
+     * @Assert\NotBlank()
      */
     private $username;
 
@@ -27,19 +30,28 @@ class User implements UserInterface
      */
     private $roles = [];
 
+    public function __construct()
+    {
+        $this->roles = array('ROLE_USER');
+    }
+
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(min="8", minMessage="Votre mot de passe doit contenir au minimum 8 caractères")
      */
     private $password;
 
+
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
 
@@ -47,6 +59,18 @@ class User implements UserInterface
     {
         return $this->id;
     }
+
+    /**
+     * @var string token for confirmation account
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $confirmationToken;
+ 
+        /**
+     * @var string token for reset password
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $resetToken;
 
     /**
      * A visual identifier that represents this user.
@@ -136,6 +160,45 @@ class User implements UserInterface
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+     /**
+     * @return string
+     */
+    public function getResetToken(): string
+    {
+        return $this->resetToken;
+    }
+ 
+    /**
+     * @param string $resetToken
+     */
+    public function setResetToken(?string $resetToken): void
+    {
+        $this->resetToken = $resetToken;
+    }
+
+    /**
+     * Get token for confirmation password
+     *
+     * @return  string
+     */ 
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * Set token for confirmation password
+     *
+     * @param  string  $confirmationToken  
+     *
+     */ 
+    public function setConfirmationToken(?string $confirmationToken)
+    {
+        $this->confirmationToken = $confirmationToken;
 
         return $this;
     }
