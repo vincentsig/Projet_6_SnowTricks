@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Guard\AuthenticatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -154,7 +153,6 @@ class SecurityController extends AbstractController
         TokenGeneratorInterface $tokenGenerator): Response
     {
         
-
         $form = $this->createForm(ForgottenPasswordType::class);
         $form->handleRequest($request);
         
@@ -242,13 +240,12 @@ class SecurityController extends AbstractController
  
             return $this->redirectToRoute('home');
            
-        }else
+        }
+        else
         {
- 
             return $this->render('security/reset_password.html.twig', [
                 'form' => $form->createView(),
-                'token' => $token]);
-             
+                'token' => $token]);   
         }
 
     }
