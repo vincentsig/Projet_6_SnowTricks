@@ -54,27 +54,37 @@
             </div>
         </div>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-    {% for comment in trick.comments %}
-	<div class="row justify-content-center">
-    <div class="col-md-8 col-xs-10">
-		 <div class="media comment-box">
-            <div class="media-left">
-                <a href="#">
-                    <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-                </a>
+        {% for comment in trick.comments|slice(0, 10) %}
+        <div class="row justify-content-center">
+        <div class="col-md-8 col-xs-10">
+            <div class="media comment-box">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ comment.author.username }}</h4>
+                    <p>{{ comment.content }}</p>
+                </div>
+                
             </div>
-            <div class="media-body">
-                <h4 class="media-heading">{{ comment.author.username }}</h4>
-                <p>{{ comment.content }}</p>
-
-            </div>
-            
         </div>
-    </div>
-    </div>
+        </div>
         {% endfor %}
     {% endif %}
    
+	{% if trick.comments|length > 8 %}
+	    <div class="row">
+	        <div class="col">
+	            <div class="text-center">
+	                <button id="loadMore" class="btn btn-outline-success btn-lg">See more</button>
+	            </div>
+	        </div>
+	    </div>
+	{% endif %}
+  
+
 
 
     <a href="{{ path('trick_index') }}">back to list</a>

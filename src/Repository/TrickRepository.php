@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Trick;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Trick|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,27 @@ class TrickRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Trick::class);
+    }
+
+    public function getComments($page, $nbPerPage)
+    {
+    $query = $this->createQueryBuilder('t')
+      ->leftJoin('t.category', 'c')
+      ->addSelect('c')
+      ->orderBy('t.createdAt', 'DESC')
+      ->getQuery()
+    ;    
+
+    $query
+    // On définit l'annonce à partir de laquelle commencer la liste
+    ->setFirstResult(($page-1) * $nbPerPage)
+    // Ainsi que le nombre d'annonce à afficher sur une page
+    ->setMaxResults($nbPerPage)
+    ;
+
+    // Enfin, on retourne l'objet Paginator correspondant à la requête construite
+    // (n'oubliez pas le use correspondant en début de fichier)
+    return new Paginator($query, true);
     }
 
     // /**

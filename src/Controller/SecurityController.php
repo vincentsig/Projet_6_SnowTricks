@@ -80,10 +80,8 @@ class SecurityController extends AbstractController
 
         $token = $request->query->get('token');
         if($token){
-        dump($token);
         $em = $this->getDoctrine()->getManager();
-        $user = $this->repository->findOneByConfirmationToken($token);
-        dump($user);    
+        $user = $this->repository->findOneByConfirmationToken($token);  
            
             if ($user=== null)
             {

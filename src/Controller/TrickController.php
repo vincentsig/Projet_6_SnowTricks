@@ -34,7 +34,7 @@ class TrickController extends AbstractController
     /**
      * @Route("/new", name="trick_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         $trick = new Trick();
         
@@ -44,6 +44,20 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //upload images
+        $files = $trick->getImageFiles();
+        dump($files);
+        foreach($files as $file)
+        {
+            $fileName = $fileUploader->upload($file);
+            dump($fileName);
+            $trick->setImageFiles($fileName);
+            
+        }
+      
+        
+
+        //------------------------------------------
         
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
@@ -82,11 +96,14 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('trick_show', array('id' => $trick->getId()));
         }
 
+        
+
+
         return $this->render('trick/show.html.twig', [
-            'trick'     => $trick,
+            'trick'     =>$trick,
             'comment'   =>$comment,
             'user'      =>$user,
-            'form'      => $form->createView()
+            'form'      =>$form->createView()
         ]);
     }
 
@@ -125,4 +142,9 @@ class TrickController extends AbstractController
 
         return $this->redirectToRoute('trick_index');
     }
+
+
+
+    
+
 }
