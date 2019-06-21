@@ -34,7 +34,7 @@ class ImageUploadListener
 
     private function uploadFile($entity)
     {
-        // upload only works for Trick entities
+        // upload only works for image entities
         if (!$entity instanceof Image) {
             return;
         }

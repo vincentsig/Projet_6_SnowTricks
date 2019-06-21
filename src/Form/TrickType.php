@@ -22,7 +22,10 @@ class TrickType extends AbstractType
             ->add('category', EntityType::class, array('class' => Category::class,
                 'choice_label' => 'getName',
                 'placeholder' => 'category', 'label' => 'Category', ))
-
+            ->add('imageFiles', FileType::class, [
+                'required' => false,
+                'multiple' => true
+            ])
     
             
         ;

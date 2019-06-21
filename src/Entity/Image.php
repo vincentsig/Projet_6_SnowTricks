@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
@@ -17,14 +18,8 @@ class Image
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
-    /** @var string $file
-     * @ORM\Column(type="string")
-     *
+    
+    /*
      * @Assert\NotBlank(message="Veuillez ajouter une photo.")
      * @Assert\File(mimeTypes={ "image/png", "image/jpeg", "image/jpg" })
      */
@@ -57,17 +52,23 @@ class Image
         return $this;
     }
 
-    public function getFile(): ?string
+    /**
+     * @return UploadedFile
+     */
+    public function getFile()
     {
         return $this->file;
     }
 
-    public function setFile(string $file): self
+    /**
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
-
-        return $this;
     }
+
+  
 
     public function getAlt(): ?string
     {
