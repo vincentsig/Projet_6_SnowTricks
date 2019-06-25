@@ -31,17 +31,76 @@ img.fondecran {
 }
 
 .carousel-caption h1 {
-    text-align: left;
-    top : 20%;
+    text-align: center;
+    top : 50%;
+    
+    
   }
+
+
 
 
 /* Trick*/
 
-.details{
-  font-style: italic;
+.jumbotron{
+  margin-bottom: 100px;
 }
 
+@media (min-width: 992px) {
+  .jumbotron {
+    color: white;
+    background-image: url(../images/default.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    text-align: center;
+    }
+
+  
+}
+
+  @media (min-width: 320px) and (max-width: 425px){
+
+    .jumbotron {
+      color: white;
+      background-image: url(../images/default.jpg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      max-height: 300px;
+      text-align: center;
+      }
+
+
+  }
+
+  @media (min-width: 425px) and (max-width: 992px){
+
+    .jumbotron {
+      color: white;
+      background-image: url(../images/default.jpg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      max-height: 400px;
+      text-align: center;
+      }
+
+
+  }
+
+
+
+
+
+
+.img-fluid.img-thumbnail{
+  width: auto;
+  max-height: 300px;
+  margin-bottom: 10px;
+  
+}
 
 
 
@@ -78,4 +137,6 @@ img.fondecran {
     position: relative;
     margin-bottom: -1px;
 }
+
+
 

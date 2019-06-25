@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+
 
 
 class ImageType extends AbstractType
@@ -16,7 +16,10 @@ class ImageType extends AbstractType
     {
         $builder
           
-            ->add('imageFiles', FileType::class, array('required' => true, 'label' => false))
+        ->add('file', FileType::class, [
+            'required' => false,
+        ])
+
             
     
             
@@ -26,8 +29,7 @@ class ImageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Image::class,
-            'createdAt' => Null
+            'data_class' => Image::class
         ]);
     }
 }

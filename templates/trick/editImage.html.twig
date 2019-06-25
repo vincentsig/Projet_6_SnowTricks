@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+      <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+{% endblock %}
+{% block title %}Edit Trick{% endblock %}
+
+{% block body %}
+    <div class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('upload/'~ trick.imageList[0].filename)}}')">
+        <div class="container">
+            <h1 class="display-4">{{trick.name}}</h1>
+            <a href="{{ path('trick_show', {'id': trick.id}) }}#tricksimages">test</a>
+        </div>
+    </div>
+    {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
+  
+   
+{% endblock %}
+

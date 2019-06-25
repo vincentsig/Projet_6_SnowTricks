@@ -233,4 +233,19 @@ class Trick
         $this->imageFiles = $imageFiles;
         return $this;
     }
+
+
+    public function addImage($filename)
+    {
+        $image = new Image();
+        $image->setFilename($filename);
+        $this->addImageList($image);
+       
+    }
+
+
+    
+
+
+   
 }

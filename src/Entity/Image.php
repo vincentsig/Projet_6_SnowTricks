@@ -18,6 +18,10 @@ class Image
      */
     private $id;
 
+     /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $filename;
     
     /*
      * @Assert\NotBlank(message="Veuillez ajouter une photo.")
@@ -93,4 +97,26 @@ class Image
 
         return $this;
     }
+
+    /**
+     * Get the value of filename
+     */ 
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * Set the value of filename
+     *
+     */ 
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    
+
 }
