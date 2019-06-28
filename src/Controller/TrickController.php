@@ -108,8 +108,7 @@ class TrickController extends AbstractController
             $files = $trick->getImageFiles();
             foreach($files as $file)
             {
-                
-                
+   
                 $fileName = $fileUploader->upload($file);
                 
                 $trick->AddImage($fileName);
@@ -130,7 +129,19 @@ class TrickController extends AbstractController
         ]);
     }
 
-   
+    /**
+     * @Route("/{id}", name="trick_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Trick $trick): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($trick);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('trick_index');
+    }
 
     /**
      * @Route("/{id}/editImage", name="edit_image", methods={"GET","POST"})
@@ -168,19 +179,7 @@ class TrickController extends AbstractController
     }
     
   
-    /**
-     * @Route("/{image}", name="image_delete", methods={"DELETE"})
-     */
-    public function deleteImage(Request $request, Image $image): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$image->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($image);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('trick_index');
-    }
+    
 
 
 }
