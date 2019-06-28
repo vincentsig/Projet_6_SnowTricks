@@ -12,28 +12,19 @@
             <a href="{{ path('trick_show', {'id': trick.id}) }}#tricksimages">test</a>
         </div>
     </div>
-
-
-
-  
-  
-
     
     <div class="container grid-img" id="tricksimages">
         <div class="row justify-content-center">
-
         {% for image  in trick.imageList[1:] %}
        
-        <div class="col-md-4 text-center">
-            <img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
-        </div>
+            <div class="col-md-4 text-center">
+                <img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
+            </div>
         
          {% endfor %}
         </div>
     </div>
    
-
-    
     <div class="container">
         <div class="row">
             <div class="col-md-10">            
