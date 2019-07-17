@@ -21,7 +21,7 @@
         <div class="col-md-4 text-center">
             <img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
             <div>
-            <a href="{{ path('edit_image', {'id': trick.id, 'image': image.id}) }}">
+            <a href="{{ path('edit_image', {'id': image.id}) }}">
             <i class="far fa-edit fa-lg"></i> Modifier 
             </a>
               {{ include('trick/_delete_image_form.html.twig') }}

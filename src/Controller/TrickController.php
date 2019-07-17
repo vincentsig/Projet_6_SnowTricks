@@ -98,7 +98,7 @@ class TrickController extends AbstractController
     /**
      * @Route("/{id}/edit", name="trick_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Trick $trick, Image $image, FileUploader $fileUploader): Response
+    public function edit(Request $request, Trick $trick, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -108,11 +108,9 @@ class TrickController extends AbstractController
             $files = $trick->getImageFiles();
             foreach($files as $file)
             {
-   
-                $fileName = $fileUploader->upload($file);
-                
-                $trick->AddImage($fileName);
-                
+
+                $fileName = $fileUploader->upload($file);   
+                $trick->AddImage($fileName);      
             }
             //------------------------------------------
             $entityManager = $this->getDoctrine()->getManager();
@@ -123,8 +121,7 @@ class TrickController extends AbstractController
         }
         
         return $this->render('trick/edit.html.twig', [
-            'trick' => $trick,
-            'image' => $image,
+            'trick' => $trick,  
             'form' => $form->createView(),
         ]);
     }
@@ -143,43 +140,9 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('trick_index');
     }
 
-    /**
-     * @Route("/{id}/editImage", name="edit_image", methods={"GET","POST"})
-     */
-    public function editImage(Request $request, Trick $trick, Image $image, FileUploader $fileUploader)
-    {
-
-        $form = $this->createForm(ImageType::class, $image);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            //upload images
-            $file = $image->getImageFiles();
-      
-                
-                
-                $fileName = $fileUploader->upload($file);
-                
-                $trick->AddImage($fileName);
-                
-        
-        //------------------------------------------
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($trick);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('trick_index');
-        }
-        
-        return $this->render('trick/editImage.html.twig', [
-            'trick' => $trick,
-            'image' =>$image,
-            'form' => $form->createView(),
-        ]);
-    }
+   
     
   
-    
-
+   
 
 }
