@@ -32,6 +32,7 @@ class ImageUploadListener
         $this->uploadFile($entity);
     }
 
+
     private function uploadFile($entity)
     {
         // upload only works for image entities
