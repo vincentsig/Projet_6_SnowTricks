@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Image;
-use App\Entity\Trick;
+use App\Form\ImageType;
 use App\Service\FileUploader;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,13 +38,31 @@ class ImageController extends AbstractController{
         return $this->redirectToRoute('trick_index');
     }
 
+    /**
+     * @Route("/{id}", name="cover_delete", methods={"DELETE"})
+     */
+    public function deleteCover(Request $request, Image $image, FileUploader $uploader): Response
+    {
+        $filename = $image->getFilename();
 
+        if ($this->isCsrfTokenValid('delete'.$image->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($image);
+            $entityManager->flush();
+
+            $filesystem = new Filesystem();
+            $filesystem->remove($uploader->getTargetDirectory() . '/' . $filename);
+        }
+
+
+        return $this->redirectToRoute('trick_index');
+    }
   
     
     /**
-    * @Route("/{id}/editImage", name="edit_image", methods={"GET","POST"})
+    * @Route("/{id}/editImage/", name="edit_image", methods={"GET","POST"})
     */
-    public function editImage(Request $request, Trick $trick, Image $image, FileUploader $fileUploader)
+    public function editImage(Request $request, Image $image, FileUploader $fileUploader)
     {
 
         $form = $this->createForm(ImageType::class, $image);
@@ -52,25 +70,28 @@ class ImageController extends AbstractController{
 
         if ($form->isSubmitted() && $form->isValid()) {
             //upload images
-            $file = $image->getImageFiles();
-      
-                
-                
+            $tempfilename = $image->getFilename();
+
+            $file = $image->getFile();
+                 
                 $fileName = $fileUploader->upload($file);
                 
-                $trick->AddImage($fileName);
-                
+                $image->setFilename($fileName);
+          
+           
         
         //------------------------------------------
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($trick);
+        $entityManager->persist($image);
         $entityManager->flush();
+
+        $filesystem = new Filesystem();
+        $filesystem->remove($fileUploader->getTargetDirectory() . '/' . $tempfilename);
 
         return $this->redirectToRoute('trick_index');
         }
         
         return $this->render('trick/editImage.html.twig', [
-            'trick' => $trick,
             'image' =>$image,
             'form' => $form->createView(),
         ]);
