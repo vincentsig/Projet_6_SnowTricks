@@ -127,9 +127,9 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="trick_delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="trick_delete", methods={"DELETE","POST"})
      */
-    public function delete(Request $request, Trick $trick): Response
+    public function deleteTrick(Request $request, Trick $trick): Response
     {
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -139,10 +139,5 @@ class TrickController extends AbstractController
 
         return $this->redirectToRoute('trick_index');
     }
-
-   
     
-  
-   
-
 }

@@ -35,7 +35,7 @@ class Image
     private $alt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="imageList")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="imageList", cascade={"remove"})
      */
     private $trick;
 
