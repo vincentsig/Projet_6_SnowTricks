@@ -65,7 +65,7 @@ class Trick
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick", cascade={"persist", "remove"})
      */
     private $comments;
 
@@ -242,11 +242,5 @@ class Trick
         $this->addImageList($image);
        
     }
-
-    
-
-    
-
-
    
 }
