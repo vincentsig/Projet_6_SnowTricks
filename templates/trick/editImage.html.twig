@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+      <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+{% endblock %}
+{% block title %}Edit Trick{% endblock %}
+
+{% block body %}
+  
+   {{ include('trick/_image_form.html.twig', {'button_label': 'Update'}) }} 
+  
+   
+{% endblock %}
+

@@ -1,16 +1,26 @@
 
 {% extends "base.html.twig" %}
-
+{% block stylesheets %}
+      <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+{% endblock %}
 {% block title "SnowTricks" %}
 
 {% block body %}
-<div class="jumbotron text-center">
-<h1>Bienvenue sur SnowTricks</h1>
-<p>SnowTricks le site communautaire de snow</p>
+{% for message in app.flashes('success') %}
+ <div class="alert alert-success">
+    {{ message }}
+ </div>
+ {% endfor %}
+<div class="fondecran">
+<img src="/uploads/images/fondecran2.jpg" img-responsive  style="width:100%"/>
+            <div class="carousel-caption">
+              <h1>SnowTricks</h1>
+              <a href="{{ path('home') }}#trickshome">test</a>
+            </div>
+ </div>
+<div class="trickshome" id="trickshome">
+
 </div>
-<div class="container">
-<h2>Les dernières figures</h2>
 
-
-
+{{ include('trick/index.html.twig') }}
 {% endblock %}
