@@ -98,6 +98,7 @@ img.fondecran {
 .img-fluid.img-thumbnail{
   width: auto;
   max-height: 300px;
+  min-height: 250px;
   margin-bottom: 10px;
   
 }

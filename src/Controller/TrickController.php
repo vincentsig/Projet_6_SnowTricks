@@ -55,7 +55,7 @@ class TrickController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            return $this->redirectToRoute('trick_index');
+            return $this->redirectToRoute('home');
         }
         
         return $this->render('trick/new.html.twig', [
@@ -117,7 +117,7 @@ class TrickController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            return $this->redirectToRoute('trick_index');
+            return $this->redirectToRoute('home');
         }
         
         return $this->render('trick/edit.html.twig', [
@@ -137,7 +137,7 @@ class TrickController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('trick_index');
+        return $this->redirectToRoute('home');
     }
     
 }
