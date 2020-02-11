@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+      <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+{% endblock %}
+{% block title %}Trick{% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('upload/'~ trick.imageList[0].filename)}}')">
+        <div class="container">
+           
+            <h1 class="display-4">{{trick.name}}</h1>
+            <a href="{{ path('trick_show', {'id': trick.id}) }}#tricksimages">test</a>
+        </div>
+    </div>
+    
+    <div class="container grid-img" id="tricksimages">
+        <div class="row justify-content-center">
+        {% for image  in trick.imageList[1:] %}
+       
+            <div class="col-md-4 text-center">
+                <img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
+            </div>
+        
+         {% endfor %}
+        </div>
+    </div>
+   
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">            
+                <p>{{ trick.description }}</p>
+            </div>
+        </div>
+        <div class="row">
+        <div class="details col-md-8">
+            <p>Posté le: {{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}
+            {% if trick.updatedAt is not null %}
+            ,Dernière modification le: {{ trick.updatedAt ? trick.updatedAt|date('Y-m-d H:i:s') : '' }}
+            {% endif %}
+            
+            </p>
+        </div>
+             <div class="details col-md-4">
+             Le Type de Trick: {{ trick.category.name}}
+             </div>
+        </div>
+        
+         <hr>
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-xs-10">
+                {{ form_start(form)}}
+                    {{ form_row(form.content)}}
+                {{form_widget(form)}}
+                    <button type="submit" class="btn btn-success">Laisser un commentaire</button>
+                {{form_end(form)}}
+            </div>
+        </div>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if trick.comments is not null %}
+        {% for comment in trick.comments|slice(0, 10) %}
+        <div class="row justify-content-center">
+        <div class="col-md-8 col-xs-10">
+            <div class="media comment-box">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ comment.author.username }}</h4>
+                    <p>{{ comment.content }}</p>
+                </div>
+                
+            </div>
+        </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    {% endif %}
+   
+	{% if trick.comments|length > 8 %}
+	    <div class="row">
+	        <div class="col">
+	            <div class="text-center">
+	                <button id="loadMore" class="btn btn-outline-success btn-lg">See more</button>
+	            </div>
+	        </div>
+	    </div>
+	{% endif %}
+  
+
+
+
+        <a href="{{ path('home') }}">back to list</a>
+
+        <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
+
+        {{ include('trick/_delete_form.html.twig') }}
+    </div>
+
+
+{% endblock %}
