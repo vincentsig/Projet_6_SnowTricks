@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-      <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+      {{ encore_entry_link_tags('app') }}
 {% endblock %}
 {% block title %}Edit Trick{% endblock %}
 
@@ -40,13 +40,16 @@
         
          {% endfor %}
         </div>
+        <div class="row justify-content-center">
+        {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
+   
+            <a href="{{ path('home') }}">back to list</a>
+
+        {{ include('trick/_delete_form.html.twig') }}
+        </div>
     </div>
 
 
-
-    {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
-   
-    <a href="{{ path('home') }}">back to list</a>
-
-    {{ include('trick/_delete_form.html.twig') }}
+    
+    
 {% endblock %}
