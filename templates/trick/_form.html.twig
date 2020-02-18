@@ -1,6 +1,10 @@
 
 {{ form_start(form) }}
-    
+     <ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
+    {% for video in form.videos %}
+            <li>{{ form_row(video.url) }}</li>
+    {% endfor %}
+</ul>
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
