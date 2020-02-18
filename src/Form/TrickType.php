@@ -4,13 +4,14 @@ namespace App\Form;
 
 
 use App\Entity\Trick;
+use App\Form\VideoType;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class TrickType extends AbstractType
 {
@@ -26,7 +27,13 @@ class TrickType extends AbstractType
                 'required' => false,
                 'multiple' => true
             ])
-    
+            ->add('videos', CollectionType::class, [
+                'entry_type'   => VideoType::class,
+                'entry_options' => ['label' => false],
+                'allow_add'    => true,
+                'allow_delete' => true
+            ])
+                
             
         ;
     }
