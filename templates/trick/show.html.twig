@@ -16,15 +16,27 @@
     
     <div class="container grid-img" id="tricksimages">
         <div class="row justify-content-center">
-        {% for image  in trick.imageList[1:] %}
-       
-            <div class="col-md-4 text-center">
-                <img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
+            <div class="col-md-6 text-center">
+
+            {% for image  in trick.imageList[1:] %}
+                {% if loop.index0 is divisible by(3) %}
+                <section class="row mb-2 ">
+
+                {% endif %}
+                    <article class="col-md-4">
+                        <img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
+                    </article>
+                {% if loop.index is divisible by(3) or loop.last %}
+                </section>
+   {% endif %}
+                    
+            {% endfor %}
             </div>
-        
-         {% endfor %}
+            <div class="col-md-6 text-center">
+            </div>
         </div>
     </div>
+   
    
     <div class="container">
         <div class="row">
