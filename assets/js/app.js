@@ -13,10 +13,14 @@ import '../css/app.css';
 
 
 
-console.log('Hello Webpack Encore!!!!!!!n Edit me in assets/js/app.js');
+console.log('Hello Webpack Encore!!!!!!! Edit me in assets/js/app.js');
 
+
+// fontawesome
 require('@fortawesome/fontawesome-free/css/all.min.css');
 require('@fortawesome/fontawesome-free/js/all.js');
+
+//----------- add and delete fields in formVideo----////
 
 var $collectionHolder;
 
@@ -28,6 +32,10 @@ jQuery(document).ready(function() {
     // Get the ul that holds the collection of videos
     $collectionHolder = $('ul.videos');
 
+    // add a delete link to all of the existing tag form li elements
+    $collectionHolder.find('li').each(function() {
+        addVideoFormDeleteLink($(this));
+    });
     // add the "add a video" anchor and li to the videos ul
     $collectionHolder.append($newLinkLi);
 
@@ -65,4 +73,25 @@ function addVideoForm($collectionHolder, $newLinkLi) {
     // Display the form in the page in an li, before the "Add a video" link li
     var $newFormLi = $('<li></li>').append(newForm);
     $newLinkLi.before($newFormLi);
+
+    // add a delete link to the new form
+    addVideoFormDeleteLink($newFormLi);
 }
+
+function addVideoFormDeleteLink($videoFormLi) {
+    var $removeFormButton = $('<button type="button">Delete this video</button>');
+    $videoFormLi.append($removeFormButton);
+
+    $removeFormButton.on('click', function(e) {
+        // remove the li for the video form
+        $videoFormLi.remove();
+    });
+}
+
+
+// button "load more" on small screen
+
+$( ".display-button" ).click(function() {
+    $( ".container.grid-img" ).css('display', 'block'); // On affiche les tricks
+    $( ".display-button" ).css('display', 'none'); // On cache le bouton
+  });
