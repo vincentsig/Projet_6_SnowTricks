@@ -46,10 +46,11 @@ class Trick
 
 
     /**
+     *        
      * @Assert\All({
-     *  @Assert\Image(mimeTypes="image/jpeg")
+     * @Assert\Image(mimeTypes="image/jpeg")
      * })  
-     */   
+     */
     private $imageFiles;
 
 
@@ -222,7 +223,7 @@ class Trick
 
     /**
      * Get the value of imageFiles
-     */ 
+     */
     public function getImageFiles()
     {
         return $this->imageFiles;
@@ -232,10 +233,10 @@ class Trick
      * Set the value of imageFiles
      *
      * @return Trick
-     */ 
+     */
     public function setImageFiles($imageFiles): self
     {
-       
+
         $this->imageFiles = $imageFiles;
         return $this;
     }
@@ -246,7 +247,6 @@ class Trick
         $image = new Image();
         $image->setFilename($filename);
         $this->addImageList($image);
-       
     }
 
     /**
@@ -279,6 +279,4 @@ class Trick
 
         return $this;
     }
-   
-  
 }

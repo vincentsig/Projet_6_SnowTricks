@@ -1,31 +1,25 @@
-
 {% extends "base.html.twig" %}
 {% block stylesheets %}
-      <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+	<link rel="stylesheet" href="{{ asset('build/app.css') }}">
 {% endblock %}
 {% block title "SnowTricks" %}
 
 {% block body %}
-<div class="container-fluid p-0">
-{% for message in app.flashes('success') %}
- <div class="alert alert-success">
-    {{ message }}
- </div>
- {% endfor %}
-<div class="fondecran">
-<img src="/uploads/images/fondecran2.jpg" img-responsive  style="width:100%"/>
-            <div class="carousel-caption">
-              <h1>SnowTricks</h1>
-            </div>
-            <a href="{{ path('home') }}#trickshome">test</a>
- </div>
-<div class="trickshome" id="trickshome">
+	<div class="container-fluid p-0">
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+		<div class="fondecran">
+			<img src="/uploads/images/fondecran2.jpg" img-responsive style="width:100%"/>
+			<div class="carousel-caption">
+				<h1>SnowTricks</h1>
+				<a href="{{ path('home') }}#trickshome">test</a>
+			</div>
+		</div>
+	</div>
 
-</div>
+	{{ include('trick/index.html.twig') }}
 
-
-</div>
-<div class="container">
-  {{ include('trick/index.html.twig') }}
-</div>
 {% endblock %}

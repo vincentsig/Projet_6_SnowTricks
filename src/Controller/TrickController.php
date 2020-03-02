@@ -11,6 +11,7 @@ use App\Form\TrickType;
 use App\Form\CommentType;
 use App\Service\FileUploader;
 use App\Repository\TrickRepository;
+use App\Service\UrlFormating;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,32 +38,40 @@ class TrickController extends AbstractController
     public function new(Request $request, FileUploader $fileUploader): Response
     {
         $trick = new Trick();
-        
-        $trick->setCreatedAt( new \DateTime());
+        $video = new Video();
+        $trick->setCreatedAt(new \DateTime());
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
+
             //upload images
             $files = $trick->getImageFiles();
-            foreach($files as $file)
-            {
+            foreach ($files as $file) {
                 $fileName = $fileUploader->upload($file);
-                
+
                 $trick->AddImage($fileName);
             }
             //------------------------------------------
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
 
+
+
             return $this->redirectToRoute('home');
         }
-        
+
+
+
+
+
         return $this->render('trick/new.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
+            'video' => $video
         ]);
     }
 
@@ -71,29 +80,30 @@ class TrickController extends AbstractController
      */
     public function show(Request $request, Trick $trick): Response
     {
+
         $comment = new Comment();
-       
+
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
-            if ($form->isSubmitted() && $form->isValid()) {
-                $comment->setAuthor($user)
-                        ->setCreatedAt(new \DateTime())
-                        ->setTrick($trick);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setAuthor($user)
+                ->setCreatedAt(new \DateTime())
+                ->setTrick($trick);
 
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($comment);
-                $entityManager->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
             return $this->redirectToRoute('trick_show', array('id' => $trick->getId()));
         }
-        
+
         return $this->render('trick/show.html.twig', [
-            'trick'     =>$trick,
-            'comment'   =>$comment,
-            'user'      =>$user,
-            'form'      =>$form->createView()
+            'trick'     => $trick,
+            'comment'   => $comment,
+            'user'      => $user,
+            'form'      => $form->createView(),
         ]);
     }
 
@@ -108,12 +118,12 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //upload images
             $files = $trick->getImageFiles();
-            foreach($files as $file)
-            {
+            foreach ($files as $file) {
 
-                $fileName = $fileUploader->upload($file);   
-                $trick->AddImage($fileName);      
+                $fileName = $fileUploader->upload($file);
+                $trick->AddImage($fileName);
             }
+
             //------------------------------------------
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
@@ -121,9 +131,9 @@ class TrickController extends AbstractController
 
             return $this->redirectToRoute('home');
         }
-        
+
         return $this->render('trick/edit.html.twig', [
-            'trick' => $trick,  
+            'trick' => $trick,
             'form' => $form->createView(),
         ]);
     }
@@ -133,7 +143,8 @@ class TrickController extends AbstractController
      */
     public function deleteTrick(Request $request, Trick $trick): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
+
+        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($trick);
             $entityManager->flush();
@@ -141,5 +152,4 @@ class TrickController extends AbstractController
 
         return $this->redirectToRoute('home');
     }
-    
 }
