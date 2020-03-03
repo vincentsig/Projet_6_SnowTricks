@@ -10,8 +10,10 @@ use App\Form\ImageType;
 use App\Form\TrickType;
 use App\Form\CommentType;
 use App\Service\FileUploader;
+use App\Repository\UserRepository;
+use App\Repository\ImageRepository;
 use App\Repository\TrickRepository;
-use App\Service\UrlFormating;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,7 +40,6 @@ class TrickController extends AbstractController
     public function new(Request $request, FileUploader $fileUploader): Response
     {
         $trick = new Trick();
-        $video = new Video();
         $trick->setCreatedAt(new \DateTime());
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -71,7 +72,7 @@ class TrickController extends AbstractController
         return $this->render('trick/new.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
-            'video' => $video
+
         ]);
     }
 
@@ -141,14 +142,25 @@ class TrickController extends AbstractController
     /**
      * @Route("/{id}/delete", name="trick_delete", methods={"DELETE","POST"})
      */
-    public function deleteTrick(Request $request, Trick $trick): Response
+    public function deleteTrick(Request $request, Trick $trick, ImageRepository $imageRepository, FileUploader $uploader): Response
     {
+
+        $images = $imageRepository->findByTrick($trick->getId());
+
 
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($trick);
             $entityManager->flush();
         }
+
+        $filesystem = new Filesystem();
+        foreach ($images as $image) {
+
+            $filename = $image->getFilename();
+            $filesystem->remove($uploader->getTargetDirectory() . '/' . $filename);
+        }
+
 
         return $this->redirectToRoute('home');
     }
