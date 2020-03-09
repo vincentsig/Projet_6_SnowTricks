@@ -65,10 +65,6 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-
-
-
-
         return $this->render('trick/new.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
@@ -77,7 +73,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="trick_show", methods={"GET", "POST"})
+     * @Route("/{id}/{slug}", name="trick_show", methods={"GET", "POST"})
      */
     public function show(Request $request, Trick $trick): Response
     {
@@ -97,7 +93,12 @@ class TrickController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comment);
             $entityManager->flush();
-            return $this->redirectToRoute('trick_show', array('id' => $trick->getId()));
+            return $this->redirectToRoute('trick_show', array(
+                'id' => $trick->getId(),
+                'category' => $trick->getCategory(),
+                'slug' => $trick->getSlug()
+
+            ));
         }
 
         return $this->render('trick/show.html.twig', [
@@ -109,7 +110,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="trick_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}/{slug}", name="trick_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Trick $trick, FileUploader $fileUploader): Response
     {

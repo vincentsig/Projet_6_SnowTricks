@@ -17,7 +17,7 @@
 				{{ include('trick/_delete_cover_image_form.html.twig') }}
 			</div>
 			<h1 class="display-4">{{trick.name}}</h1>
-			<a href="{{ path('trick_show', {'id': trick.id}) }}#tricksimages">test</a>
+			<a href="{{ path('trick_show', {'id': trick.id, 'slug': trick.slug}) }}#tricksimages">test</a>
 		</div>
 	</div>
 
