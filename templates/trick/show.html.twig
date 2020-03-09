@@ -10,7 +10,7 @@
 	<div class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('upload/'~ trick.imageList[0].filename)}}')">
 		<div class="container">
 			<h1 class="display-4">{{trick.name}}</h1>
-			<a href="{{ path('trick_show', {'id': trick.id}) }}#tricksimages">test</a>
+			<a href="{{ path('trick_show', {'id' : trick.id , 'slug': trick.slug}) }}#tricksimages">test</a>
 		</div>
 	</div>
 	<div
@@ -116,7 +116,7 @@
 			</div>
 		{% endif %}
 		<a href="{{ path('home') }}">back to list</a>
-		<a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
+		<a href="{{ path('trick_edit',{'id' : trick.id , 'slug': trick.slug}) }}">edit</a>
 		{{ include('trick/_delete_form.html.twig') }}
 	</div>
 
