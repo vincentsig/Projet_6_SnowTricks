@@ -6,44 +6,53 @@
 {% endblock %}
 
 {% block body %}
+	{% if trick.imageList is empty  %}
+		<!---cover image trick-->
+		<div class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('uploads/images/default.jpg')}}')">
 
-	<div class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('upload/'~ trick.imageList[0].filename)}}')">
-		<div class="container">
-			<div class="icon-cover">
-				<a href="{{ path('edit_image', {'id': trick.imageList[0].id}) }}">
-					<i class="far fa-edit fa-lg"></i>
-					Modifier
-				</a>
-				{{ include('trick/_delete_cover_image_form.html.twig') }}
-			</div>
-			<h1 class="display-4">{{trick.name}}</h1>
-			<a href="{{ path('trick_show', {'id': trick.id, 'slug': trick.slug}) }}#tricksimages">test</a>
-		</div>
-	</div>
+		{% else %}
+			<div class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('upload/'~ trick.imageList[0].filename)}}')">
+			{% endif %}
+			<div class="container">
+				<div class="icon-cover">
+					{% if trick.imageList is not empty  %}
 
-	<div class="container grid-img" id="tricksimages">
-		<div class="row justify-content-center">
-			{% for image  in trick.imageList[1:] %}
-				<div class="col-md-4 text-center">
-					<img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
-					<div>
-						<a href="{{ path('edit_image', {'id': image.id}) }}">
+						<a href="{{ path('edit_image', {'id': trick.imageList[0].id}) }}">
 							<i class="far fa-edit fa-lg"></i>
 							Modifier
 						</a>
-						{{ include('trick/_delete_image_form.html.twig') }}
-					</div>
+
+						{{ include('trick/_delete_cover_image_form.html.twig') }}
+					{% endif %}
 				</div>
-
-			{% endfor %}
+				<h1 class="display-4">{{trick.name}}</h1>
+				<a href="{{ path('trick_show', {'id': trick.id, 'slug': trick.slug}) }}#tricksimages">test</a>
+			</div>
 		</div>
-		<div class="row justify-content-center">
-			{{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
 
-			<a href="{{ path('home') }}">back to list</a>
+		<div class="container grid-img" id="tricksimages">
+			<div class="row justify-content-center">
+				{% for image  in trick.imageList[1:] %}
+					<div class="col-md-4 text-center">
+						<img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
+						<div>
+							<a href="{{ path('edit_image', {'id': image.id}) }}">
+								<i class="far fa-edit fa-lg"></i>
+								Modifier
+							</a>
+							{{ include('trick/_delete_image_form.html.twig') }}
+						</div>
+					</div>
 
-			{{ include('trick/_delete_form.html.twig') }}
+				{% endfor %}
+			</div>
+			<div class="row justify-content-center">
+				{{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
+
+				<a href="{{ path('home') }}">back to list</a>
+
+				{{ include('trick/_delete_form.html.twig') }}
+			</div>
 		</div>
-	</div>
 
-{% endblock %}
+	{% endblock %}

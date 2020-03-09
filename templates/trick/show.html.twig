@@ -7,117 +7,126 @@
 
 {% block body %}
 	<!--Cover Image-->
-	<div class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('upload/'~ trick.imageList[0].filename)}}')">
-		<div class="container">
-			<h1 class="display-4">{{trick.name}}</h1>
-			<a href="{{ path('trick_show', {'id' : trick.id , 'slug': trick.slug}) }}#tricksimages">test</a>
-		</div>
-	</div>
-	<div
-		class="container grid-img" id="tricksimages">
-		<!--Image grid-->
-		<div class="row justify-content-center">
-			<div class="col-md-6 text-center">
-				{% for image  in trick.imageList[1:] %}
-					{% if loop.index0 is divisible by(3) %}
-						<section class="row mb-2 ">
-						{% endif %}
-						<article class="col-md-4">
-							<img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
-						</article>
-						{% if loop.index is divisible by(3) or loop.last %}
-						</section>
-					{% endif %}
-				{% endfor %}'
-			</div>
-			<!-- Video grid-->
-			<div class="col-md-6 text-center">
-				{% for video in trick.videos %}
-					{% if loop.index0 is divisible by(3) %}
-						<section class="row mb-2 ">
-						{% endif %}
-						<article class="col-md-4">
-							<div class="embed-responsive embed-responsive-4by3">
-								<iframe width="560" height="315" src="{{ video.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-							</div>
-						</article>
-						{% if loop.index is divisible by(3) or loop.last %}
-						</section>
-					{% endif %}
-				{% endfor %}
-			</div>
-		</div>
-	</div>
-	<button class="display-button btn btn-primary" type="button">See More Medias
-	</button>
+	{% if trick.imageList is empty  %}
 
-	<div class="container">
-		<div class="row">
-			<div class="col-md-10">
-				<p>{{ trick.description }}</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="details col-md-8">
-				<p>Posté le:
-					{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}
-					{% if trick.updatedAt is not null %}
-						,Dernière modification le:
-						{{ trick.updatedAt ? trick.updatedAt|date('Y-m-d H:i:s') : '' }}
-					{% endif %}
-				</p>
-			</div>
-			<div class="details col-md-4">
-				Le Type de Trick:
-				{{ trick.category.name}}
-			</div>
-		</div>
-
-		<!-- comments -->
-		<div class="row justify-content-center">
-			<div class="col-md-8 col-xs-10">
-				{{ form_start(form)}}
-				{{ form_row(form.content)}}
-				{{form_widget(form)}}
-				<button type="submit" class="btn btn-primary">Laisser un commentaire</button>
-				{{form_end(form)}}
-			</div>
-		</div>
-		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-			{% if trick.comments is not null %}
-				{% for comment in trick.comments|slice(0, 10) %}
-					<div class="row justify-content-center">
-						<div class="col-md-8 col-xs-10">
-							<div class="media comment-box">
-								<div class="media-left">
-									<a href="#">
-										<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-									</a>
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">{{ comment.author.username }}</h4>
-									<p>{{ comment.content }}</p>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				{% endfor %}
+		<div
+			class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('uploads/images/default.jpg')}}')">
+			<!---cover image trick-->
+		{% else %}
+			<div class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('upload/'~ trick.imageList[0].filename)}}')">
 			{% endif %}
-		{% endif %}
 
-		{% if trick.comments|length > 8 %}
-			<div class="row">
-				<div class="col">
-					<div class="text-center">
-						<button id="loadMore" class="btn btn-outline-success btn-lg">See more</button>
-					</div>
+
+			<div class="container">
+				<h1 class="display-4">{{trick.name}}</h1>
+				<a href="{{ path('trick_show', {'id' : trick.id , 'slug': trick.slug}) }}#tricksimages">test</a>
+			</div>
+		</div>
+		<div
+			class="container grid-img" id="tricksimages">
+			<!--Image grid-->
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center">
+					{% for image  in trick.imageList[1:] %}
+						{% if loop.index0 is divisible by(3) %}
+							<section class="row mb-2 ">
+							{% endif %}
+							<article class="col-md-4">
+								<img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
+							</article>
+							{% if loop.index is divisible by(3) or loop.last %}
+							</section>
+						{% endif %}
+					{% endfor %}'
+				</div>
+				<!-- Video grid-->
+				<div class="col-md-6 text-center">
+					{% for video in trick.videos %}
+						{% if loop.index0 is divisible by(3) %}
+							<section class="row mb-2 ">
+							{% endif %}
+							<article class="col-md-4">
+								<div class="embed-responsive embed-responsive-4by3">
+									<iframe width="560" height="315" src="{{ video.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</article>
+							{% if loop.index is divisible by(3) or loop.last %}
+							</section>
+						{% endif %}
+					{% endfor %}
 				</div>
 			</div>
-		{% endif %}
-		<a href="{{ path('home') }}">back to list</a>
-		<a href="{{ path('trick_edit',{'id' : trick.id , 'slug': trick.slug}) }}">edit</a>
-		{{ include('trick/_delete_form.html.twig') }}
-	</div>
+		</div>
+		<button class="display-button btn btn-primary" type="button">See More Medias
+		</button>
 
-{% endblock %}
+		<div class="container">
+			<div class="row">
+				<div class="col-md-10">
+					<p>{{ trick.description }}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="details col-md-8">
+					<p>Posté le:
+						{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}
+						{% if trick.updatedAt is not null %}
+							,Dernière modification le:
+							{{ trick.updatedAt ? trick.updatedAt|date('Y-m-d H:i:s') : '' }}
+						{% endif %}
+					</p>
+				</div>
+				<div class="details col-md-4">
+					Le Type de Trick:
+					{{ trick.category.name}}
+				</div>
+			</div>
+
+			<!-- comments -->
+			<div class="row justify-content-center">
+				<div class="col-md-8 col-xs-10">
+					{{ form_start(form)}}
+					{{ form_row(form.content)}}
+					{{form_widget(form)}}
+					<button type="submit" class="btn btn-primary">Laisser un commentaire</button>
+					{{form_end(form)}}
+				</div>
+			</div>
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				{% if trick.comments is not null %}
+					{% for comment in trick.comments|slice(0, 10) %}
+						<div class="row justify-content-center">
+							<div class="col-md-8 col-xs-10">
+								<div class="media comment-box">
+									<div class="media-left">
+										<a href="#">
+											<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">{{ comment.author.username }}</h4>
+										<p>{{ comment.content }}</p>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% endif %}
+			{% endif %}
+
+			{% if trick.comments|length > 8 %}
+				<div class="row">
+					<div class="col">
+						<div class="text-center">
+							<button id="loadMore" class="btn btn-outline-success btn-lg">See more</button>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+			<a href="{{ path('home') }}">back to list</a>
+			<a href="{{ path('trick_edit',{'id' : trick.id , 'slug': trick.slug}) }}">edit</a>
+			{{ include('trick/_delete_form.html.twig') }}
+		</div>
+
+	{% endblock %}
