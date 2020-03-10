@@ -25,7 +25,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-   
+
     private $flashBag;
     private $entityManager;
     private $urlGenerator;
@@ -75,29 +75,31 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Votre identidiant n\'a pas été trouvé.');
         }
-
+        //check if the account have been validated with the CreatedAt field
+        $validated = $user->getCreatedAt();
+        if ($validated === null) {
+            throw new CustomUserMessageAuthenticationException('Veuillez consulter votre boite mail et valider votre compte avant de vous connecter');
+        }
         return $user;
     }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
+
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
-            
         }
         $this->flashBag->add(
             'success',
             'Vous êtes connecté'
         );
         return new RedirectResponse($this->urlGenerator->generate('home'));
-        
-       
     }
 
     protected function getLoginUrl()
