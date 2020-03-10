@@ -34,7 +34,7 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->roles = array('ROLE_USER');
+
         $this->comments = new ArrayCollection();
     }
 
@@ -68,8 +68,8 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $confirmationToken;
- 
-        /**
+
+    /**
      * @var string token for reset password
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -103,8 +103,10 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
 
         return array_unique($roles);
     }
@@ -172,14 +174,14 @@ class User implements UserInterface
         return $this;
     }
 
-     /**
+    /**
      * @return string
      */
     public function getResetToken(): string
     {
         return $this->resetToken;
     }
- 
+
     /**
      * @param string $resetToken
      */
@@ -192,7 +194,7 @@ class User implements UserInterface
      * Get token for confirmation password
      *
      * @return  string
-     */ 
+     */
     public function getConfirmationToken()
     {
         return $this->confirmationToken;
@@ -203,7 +205,7 @@ class User implements UserInterface
      *
      * @param  string  $confirmationToken  
      *
-     */ 
+     */
     public function setConfirmationToken(?string $confirmationToken)
     {
         $this->confirmationToken = $confirmationToken;
@@ -240,5 +242,13 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function isValidated()
+    {
+        if ($this->createdAt === null) {
+
+            return true;
+        }
     }
 }
