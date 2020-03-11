@@ -21,10 +21,12 @@
 					<div class="d-flex infoTrick justify-content-between px-3">
 						<h5>
 							{{ trick.name }}</h5>
-						<a href="{{ path('trick_edit', {'id': trick.id, 'slug': trick.slug}) }}">
-							<i class="far fa-edit fa-lg" title="editer"></i>
-						</a>
-						{{ include('trick/_delete_form.html.twig') }}
+						{% if is_granted('ROLE_USER') %}
+							<a href="{{ path('trick_edit', {'id': trick.id, 'slug': trick.slug}) }}">
+								<i class="far fa-edit fa-lg" title="editer"></i>
+							</a>
+							{{ include('trick/_delete_form.html.twig') }}
+						{% endif %}
 					</div>
 
 
