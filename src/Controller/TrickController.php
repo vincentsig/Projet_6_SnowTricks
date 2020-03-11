@@ -2,15 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Image;
+
 use App\Entity\Trick;
-use App\Entity\Video;
 use App\Entity\Comment;
-use App\Form\ImageType;
 use App\Form\TrickType;
 use App\Form\CommentType;
 use App\Service\FileUploader;
-use App\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\ImageRepository;
 use App\Repository\TrickRepository;
 use Symfony\Component\Filesystem\Filesystem;
@@ -36,6 +34,7 @@ class TrickController extends AbstractController
 
     /**
      * @Route("/new", name="trick_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request, FileUploader $fileUploader): Response
     {
@@ -83,7 +82,7 @@ class TrickController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $user = $this->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setAuthor($user)
@@ -111,6 +110,7 @@ class TrickController extends AbstractController
 
     /**
      * @Route("/edit/{id}/{slug}", name="trick_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Trick $trick, FileUploader $fileUploader): Response
     {
@@ -142,6 +142,7 @@ class TrickController extends AbstractController
 
     /**
      * @Route("/{id}/delete", name="trick_delete", methods={"DELETE","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function deleteTrick(Request $request, Trick $trick, ImageRepository $imageRepository, FileUploader $uploader): Response
     {

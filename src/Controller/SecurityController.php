@@ -8,7 +8,6 @@ use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
 use App\Form\ForgottenPasswordType;
 use App\Security\LoginFormAuthenticator;
-use App\Security\UserChecker;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;

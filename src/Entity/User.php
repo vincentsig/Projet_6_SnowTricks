@@ -243,12 +243,4 @@ class User implements UserInterface
 
         return $this;
     }
-
-    public function isValidated()
-    {
-        if ($this->createdAt === null) {
-
-            return true;
-        }
-    }
 }
