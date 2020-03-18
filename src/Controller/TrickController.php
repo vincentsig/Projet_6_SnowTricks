@@ -7,6 +7,7 @@ use App\Entity\Trick;
 use App\Entity\Comment;
 use App\Form\TrickType;
 use App\Form\CommentType;
+use App\Repository\CommentRepository;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\ImageRepository;
@@ -72,7 +73,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/{slug}", name="trick_show", methods={"GET", "POST"})
+     * @Route("/show/{id}/{slug}", name="trick_show", methods={"GET", "POST"})
      */
     public function show(Request $request, Trick $trick): Response
     {
@@ -165,5 +166,20 @@ class TrickController extends AbstractController
 
 
         return $this->redirectToRoute('home');
+    }
+
+    /**
+     * Get the 5 next comments in the database and create a Twig file with them that will be displayed via Javascript
+     * 
+     * @Route("/{id}/{start}", name="loadMoreComments", requirements={"start": "\d+"})
+     */
+    public function loadMoreComments(TrickRepository $trickRepository, $id, $start = 5)
+    {
+        $trick = $trickRepository->findOneByid($id);
+
+        return $this->render('trick/loadMoreComments.html.twig', [
+            'trick' => $trick,
+            'start' => $start
+        ]);
     }
 }
