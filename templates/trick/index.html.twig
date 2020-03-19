@@ -6,18 +6,27 @@
 			{% if loop.index0 is divisible by(4) %}
 				<section class="row">
 				{% endif %}
-				<article
-					class="col-sm-3 text-center">
-					<!---cover image trick-->
-					<a href="{{ path('trick_show', {'id': trick.id}) }}"><img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ trick.imageList[0].filename)}}"></a>
+				<article class="col-sm-3 text-center">
+
+					{% if trick.imageList is empty  %}
+						<a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="img-fluid img-thumbnail" src="{{asset('uploads/images/default.jpg')}}"></a>
+
+						<!---cover image trick-->
+					{% else %}
+						<a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ trick.imageList[0].filename)}}"></a>
+
+					{% endif %}
+
 					<!-- trick interactions-->
 					<div class="d-flex infoTrick justify-content-between px-3">
 						<h5>
 							{{ trick.name }}</h5>
-						<a href="{{ path('trick_edit', {'id': trick.id}) }}">
-							<i class="far fa-edit fa-lg" title="editer"></i>
-						</a>
-						{{ include('trick/_delete_form.html.twig') }}
+						{% if is_granted('ROLE_USER') %}
+							<a href="{{ path('trick_edit', {'id': trick.id, 'slug': trick.slug}) }}">
+								<i class="far fa-edit fa-lg" title="editer"></i>
+							</a>
+							{{ include('trick/_delete_form.html.twig') }}
+						{% endif %}
 					</div>
 
 
@@ -29,6 +38,4 @@
 
 
 	</div>
-
-
 {% endblock %}

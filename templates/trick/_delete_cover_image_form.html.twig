@@ -1,6 +1,6 @@
-
 <form method="post" action="{{ path('cover_delete', {'id': trick.imageList[0].id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette image?');">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.imageList[0].id) }}">
-    <button class="btn"><i class="fas fa-trash-alt fa-lg"></i>Supprimer</button>
+	<input type="hidden" name="_method" value="DELETE">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.imageList[0].id) }}">
+	<button class="btn">
+		<i class="fas fa-trash-alt fa-lg"></i>Supprimer</button>
 </form>

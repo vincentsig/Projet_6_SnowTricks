@@ -9,9 +9,9 @@
 import '../css/app.css';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-// const $ = require('jquery');
+//const $ = require('jquery');
 
-
+import axios from 'axios';
 
 console.log('Hello Webpack Encore!!!!!!! Edit me in assets/js/app.js');
 
@@ -28,12 +28,12 @@ var $collectionHolder;
 var $addVideoButton = $('<button type="button" class="add_video_link">Add a video</button>');
 var $newLinkLi = $('<li></li>').append($addVideoButton);
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     // Get the ul that holds the collection of videos
     $collectionHolder = $('ul.videos');
 
     // add a delete link to all of the existing tag form li elements
-    $collectionHolder.find('li').each(function() {
+    $collectionHolder.find('li').each(function () {
         addVideoFormDeleteLink($(this));
     });
     // add the "add a video" anchor and li to the videos ul
@@ -43,7 +43,7 @@ jQuery(document).ready(function() {
     // index when inserting a new item (e.g. 2)
     $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
-    $addVideoButton.on('click', function(e) {
+    $addVideoButton.on('click', function (e) {
         // add a new video form (see next code block)
         addVideoForm($collectionHolder, $newLinkLi);
     });
@@ -82,16 +82,56 @@ function addVideoFormDeleteLink($videoFormLi) {
     var $removeFormButton = $('<button type="button">Delete this video</button>');
     $videoFormLi.append($removeFormButton);
 
-    $removeFormButton.on('click', function(e) {
+    $removeFormButton.on('click', function (e) {
         // remove the li for the video form
         $videoFormLi.remove();
     });
 }
 
 
-// button "load more" on small screen
+//------ button "view more" on small screen---------
 
-$( ".display-button" ).click(function() {
-    $( ".container.grid-img" ).css('display', 'block'); // On affiche les tricks
-    $( ".display-button" ).css('display', 'none'); // On cache le bouton
-  });
+$(".display-button").click(function () {
+    $(".container.grid-img").css('display', 'block'); // On affiche les tricks
+    $(".display-button").css('display', 'none'); // On cache le bouton
+});
+
+
+//---------- button "load more comments"--------------------
+var click = 0;
+var CountNumber = $('#comments').data('allcomments');
+var start = 0; {
+
+}
+//if there is no more comments to load we hide the button
+function lastClick() {
+    if (start > CountNumber) {
+        $('#loadMoreComments').hide();
+    }
+} {
+
+
+}
+//the path to the comment view
+var path = $('#comments').data('path');
+
+function loadMoreComments(event) {
+    event.preventDefault();
+    click++;
+    start = 5 * click;
+    const url = path + start;
+    axios.get(url).then(function (response) {
+        jQuery("#comments").append(response.data);
+    }).catch(function (error) {
+        if (response.status === 403) {
+            window.alert("Vous n'êtes pas autorisé à effectuer cette action !");
+        } else if (response.status === 404) {
+            window.alert("La page appelé n'existe pas");
+        } else {
+            window.alert("Une erreur est survenue !");
+        }
+    });
+    lastClick();
+}
+
+document.getElementById("loadMoreComments").addEventListener("click", loadMoreComments);
