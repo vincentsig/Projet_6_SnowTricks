@@ -33,6 +33,7 @@ class Category
      */
     private $tricks;
 
+
     public function __construct()
     {
         $this->tricks = new ArrayCollection();

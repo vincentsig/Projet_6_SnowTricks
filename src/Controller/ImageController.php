@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/trick")
@@ -22,6 +23,8 @@ class ImageController extends AbstractController
 
     /**
      * @Route("/{id}", name="image_delete", methods={"DELETE"})
+     * @isGranted("ROLE_USER")
+     * 
      */
     public function deleteImage(Request $request, Image $image, FileUploader $uploader): Response
     {
@@ -43,6 +46,7 @@ class ImageController extends AbstractController
 
     /**
      * @Route("/{id}", name="cover_delete", methods={"DELETE"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function deleteCover(Request $request, Image $image, Trick $trick, FileUploader $uploader): Response
     {
@@ -65,6 +69,7 @@ class ImageController extends AbstractController
 
     /**
      * @Route("/{id}/editImage/", name="edit_image", methods={"GET","POST"})
+     * @isGranted("ROLE_USER")
      */
     public function editImage(Request $request, Image $image, FileUploader $fileUploader)
     {

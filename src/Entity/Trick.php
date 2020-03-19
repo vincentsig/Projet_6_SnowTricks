@@ -20,7 +20,7 @@ class Trick
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false,  unique=true)
      */
     private $name;
 
@@ -95,6 +95,10 @@ class Trick
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        $slug = $this->slugConverter($this->name);
+
+        $this->setSlug($slug);
 
         return $this;
     }
@@ -278,5 +282,33 @@ class Trick
         }
 
         return $this;
+    }
+
+    private function slugConverter(string $text)
+    {
+        $utf8 = array(
+            '/[áàâãªä]/u' => 'a',
+            '/[ÁÀÂÃÄ]/u' => 'A',
+            '/[ÍÌÎÏ]/u' => 'I',
+            '/[íìîï]/u' => 'i',
+            '/[éèêë]/u' => 'e',
+            '/[ÉÈÊË]/u' => 'E',
+            '/[óòôõºö]/u' => 'o',
+            '/[ÓÒÔÕÖ]/u' => 'O',
+            '/[úùûü]/u' => 'u',
+            '/[ÚÙÛÜ]/u' => 'U',
+            '/ç/' => 'c',
+            '/Ç/' => 'C',
+            '/ñ/' => 'n',
+            '/Ñ/' => 'N',
+            '/[«»]/u' => ' ',
+            '/ /' => ' ',
+        );
+        $slug = preg_replace(array_keys($utf8), array_values($utf8), $text);
+        $slug = str_replace('-', '', strtolower($slug));
+        $slug = str_replace('\'', '-', $slug);
+        $slug = str_replace(' ', '-', $slug);
+
+        return $slug;
     }
 }
