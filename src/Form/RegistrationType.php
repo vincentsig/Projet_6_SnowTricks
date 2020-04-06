@@ -20,9 +20,8 @@ class RegistrationType extends AbstractType
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
                 'invalid_message' => 'Les champs ne correspondent pas'
-                ))
-            ->add('email')
-        ;
+            ))
+            ->add('email');
     }
 
     public function configureOptions(OptionsResolver $resolver)

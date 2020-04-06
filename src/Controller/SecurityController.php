@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Profile;
 use App\Form\RegistrationType;
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
@@ -82,7 +83,8 @@ class SecurityController extends AbstractController
         GuardAuthenticatorHandler $guardHandler
     ) {
         $user = new User();
-
+        $profile = new Profile;
+        $user->setProfile($profile);
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
@@ -98,6 +100,7 @@ class SecurityController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $user = $this->repository->findOneByConfirmationToken($token);
                 $user->setCreatedAt(new \DateTime());
+
                 $user->setConfirmationToken(null);
                 $em->flush();
                 $this->addFlash('success', 'votre compte à bien été validé');
@@ -115,7 +118,6 @@ class SecurityController extends AbstractController
 
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();

@@ -83,7 +83,7 @@ class ImageController extends AbstractController
 
             $file = $image->getFile();
 
-            $fileName = $fileUploader->upload($file);
+            $fileName = $fileUploader->upload($file, $image);
 
             $image->setFilename($fileName);
 

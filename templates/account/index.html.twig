@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Mon Compte
+{% endblock %}
+{% block body %}
+	<div>
+		{{user.email}}
+		<img class="avatar-full" src="{{asset('upload/avatar/' ~ user.profile.avatarFileName)}}">
+
+
+	</div>
+
+
+{% endblock %}

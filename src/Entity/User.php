@@ -81,6 +81,14 @@ class User implements UserInterface
     private $comments;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Profile", inversedBy="user", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $profile;
+
+
+
+    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -240,6 +248,18 @@ class User implements UserInterface
                 $comment->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(Profile $profile): self
+    {
+        $this->profile = $profile;
 
         return $this;
     }

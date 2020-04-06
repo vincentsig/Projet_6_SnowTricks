@@ -50,7 +50,7 @@ class TrickController extends AbstractController
             //upload images
             $files = $trick->getImageFiles();
             foreach ($files as $file) {
-                $fileName = $fileUploader->upload($file);
+                $fileName = $fileUploader->upload($file, $trick);
 
                 $trick->AddImage($fileName);
             }
@@ -85,6 +85,8 @@ class TrickController extends AbstractController
 
 
         $user = $this->getUser();
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setAuthor($user)
                 ->setCreatedAt(new \DateTime())
@@ -123,7 +125,7 @@ class TrickController extends AbstractController
             $files = $trick->getImageFiles();
             foreach ($files as $file) {
 
-                $fileName = $fileUploader->upload($file);
+                $fileName = $fileUploader->upload($file, $trick);
                 $trick->AddImage($fileName);
             }
 
