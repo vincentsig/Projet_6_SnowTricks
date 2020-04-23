@@ -2,7 +2,7 @@
 {% block stylesheets %}
 	{{ encore_entry_link_tags('app') }}
 {% endblock %}
-{% block title %}Edit Trick
+{% block title %}Modifier un Trick
 {% endblock %}
 
 {% block body %}
@@ -31,6 +31,7 @@
 		</div>
 
 		<div class="container grid-img" id="tricksimages">
+			<h2>Mise à jour du Trick</h2>
 			<div class="row justify-content-center">
 				{% for image  in trick.imageList[1:] %}
 					<div class="col-md-4 text-center">
@@ -49,10 +50,15 @@
 			<div class="row justify-content-center">
 				{{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
 
-				<a href="{{ path('home') }}">back to list</a>
 
-				{{ include('trick/_delete_form.html.twig') }}
+				<div class="d-flex justify-content-center justify-content-sm-end mb-2 ">
+					<a href="{{ path('trick_edit',{'id' : trick.id , 'slug': trick.slug}) }}" class="btn btn-primary ">Retour</a>
+					{% include 'trick/_delete_form.html.twig' with {'icon':true} %}
+				</div>
+
+
 			</div>
+
 		</div>
 
 	{% endblock %}

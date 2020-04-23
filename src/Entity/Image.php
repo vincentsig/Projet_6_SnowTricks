@@ -18,14 +18,20 @@ class Image
      */
     private $id;
 
-     /**
+    /**
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $filename;
-    
+
     /*
      * @Assert\NotBlank(message="Veuillez ajouter une photo.")
-     * @Assert\File(mimeTypes={ "image/png", "image/jpeg", "image/jpg" })
+     * @Assert\Image(
+     * mimeTypes={"image/jpeg", "image/png", "image/jpg"},
+     * mimeTypesMessage="L'image doit avoir une extension .jpeg .jpg ou .png",
+     * allowPortrait = false,
+     * allowPortraitMessage = " Les images en portrait ne sont pas acceptés,veuillez choisir un format paysage"
+     * ) 
+     * 
      */
     private $file;
 
@@ -61,7 +67,7 @@ class Image
         $this->file = $file;
     }
 
-  
+
 
     public function getAlt(): ?string
     {
@@ -89,7 +95,7 @@ class Image
 
     /**
      * Get the value of filename
-     */ 
+     */
     public function getFilename()
     {
         return $this->filename;
@@ -98,13 +104,11 @@ class Image
     /**
      * Set the value of filename
      *
-     */ 
+     */
     public function setFilename($filename)
     {
         $this->filename = $filename;
 
         return $this;
     }
-
-
 }

@@ -5,21 +5,69 @@
 {% block title "SnowTricks" %}
 
 {% block body %}
-	<div class="container-fluid p-0">
+	<!-- background image-->
+	<div class="container-fluid p-0" style="position:relative;">
 		{% for message in app.flashes('success') %}
 			<div class="alert alert-success">
 				{{ message }}
 			</div>
 		{% endfor %}
-		<div class="fondecran">
-			<img src="/uploads/images/fondecran2.jpg" img-responsive style="width:100%"/>
-			<div class="carousel-caption">
-				<h1>SnowTricks</h1>
-				<a href="{{ path('home') }}#trickshome">test</a>
-			</div>
-		</div>
+		<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../uploads/images/fondecran2.jpg);">
+			<h1 class="h1-responsive">SnowTricks</h1>
+			<h2>The mountains are calling
+				<br>
+				And you must go!
+			</h2>
+			<a href="{{ path('home') }}#trickslist" class="btn btn-pill btn-primary">Voir plus de contenus
+				<br>
+				<i class="fas fa-arrow-down" style="font-size:2em; color:white;"></i>
+			</a>
+		</section>
 	</div>
 
-	{{ include('trick/index.html.twig') }}
+	<div class="container-fluid grid-img px-5" id="trickslist">
+		{% if is_granted('ROLE_USER') %}
+			<a href="{{ path('trick_new')}}" class="addTrick btn btn-primary btn-lg btn-block my-4" role"button">Ajouter un Trick</a>
+		{% endif %}
+		{% for trick in tricks %}
+			{% if loop.index0 is divisible by(4) %}
+				<section class="row">
+				{% endif %}
+				<div class="col-sm-6 col-md-3">
+					{% if trick.imageList is empty  %}
+						<a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="img-fluid img-thumbnail" src="{{asset('uploads/images/default.jpg')}}"></a>
+						<!---cover image trick-->
+					{% else %}
+						<a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ trick.imageList[0].filename)}}"></a>
+					{% endif %}
+					<!-- trick interactions-->
+					<div class="d-flex infoTrick justify-content-between pr-2 align-items-center ">
+						<h5>
+							{{ trick.name|capitalize }}</h5>
+						{% if is_granted('ROLE_USER') %}
+							<div class="editIcon d-flex justify-content-between ml-1">
+								<a href="{{ path('trick_edit', {'id': trick.id, 'slug': trick.slug}) }}">
+									<i class="far fa-edit fa-lg" title="editer"></i>
+								</a>
+								<!-- show delete icon -->
+								{% include 'trick/_delete_form.html.twig' with {'icon':true} %}
+							</div>
+						{% endif %}
+					</div>
+				</div>
+				{% if loop.index is divisible by(4) or loop.last %}
+				</section>
+			{% endif %}
+		{% endfor %}
+		<!-- top scroll button -->
+		{% if tricks|length > 8  %}
+			<div class="col text-center">
+				<a id="topScroll" title="Go to top" style="position:center">
+					<i class="fas fa-arrow-up"></i>
+				</a>
+			</div>
+		{% endif %}
+	</div>
+
 
 {% endblock %}

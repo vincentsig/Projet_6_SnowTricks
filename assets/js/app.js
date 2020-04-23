@@ -88,11 +88,31 @@ function addVideoFormDeleteLink($videoFormLi) {
     });
 }
 
+//--------top button---------------------
+
+
+//Get the button:
+$("#topScroll").click(function (Event) {
+    Event.preventDefault();
+    topFunction();
+    console.log('click button')
+});
+
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
+
+
+
 
 //------ button "view more" on small screen---------
 
 $(".display-button").click(function () {
-    $(".container.grid-img").css('display', 'block'); // On affiche les tricks
+    $("#tricksimages").css('display', 'block'); // On affiche les tricks
     $(".display-button").css('display', 'none'); // On cache le bouton
 });
 

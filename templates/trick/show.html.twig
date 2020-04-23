@@ -7,25 +7,44 @@
 
 {% block body %}
 	<!--Cover Image-->
-	{% if trick.imageList is empty  %}
+	<div class="container-fluid p-0" style="position:relative;">
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% if trick.imageList is empty  %}
+			<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('uploads/images/default.jpg')}}');">
 
-		<div
-			class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('uploads/images/default.jpg')}}')">
-			<!---cover image trick-->
-		{% else %}
-			<div class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('upload/'~ trick.imageList[0].filename)}}')">
-			{% endif %}
+			{% else %}
+				<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('upload/'~ trick.imageList[0].filename)}}');">
+				{% endif %}
+				<h1 class="display-4">"{{trick.name}}"</h1>
+				<br>
+				<a href="{{ path('trick_show', {'id' : trick.id , 'slug': trick.slug}) }}#editButtons" class="btn btn-pill btn-primary">Détails du trick
+					<br>
+					<i class="fas fa-arrow-down" style="font-size:2em; color:white;"></i>
+				</a>
+			</section>
+		</div>
 
 
-			<div class="container">
-				<h1 class="display-4">{{trick.name}}</h1>
-				<a href="{{ path('trick_show', {'id' : trick.id , 'slug': trick.slug}) }}#tricksimages">test</a>
+		<div class="container-fluid px-5" id="editButtons">
+
+			<div class="d-flex justify-content-center justify-content-sm-end mb-2 ">
+				{% if is_granted('ROLE_USER') %}
+					<a href="{{ path('trick_edit',{'id' : trick.id , 'slug': trick.slug}) }}" class="btn btn-primary btn-lg mr-1 ">Modifier</a>
+					<!--show delete button if icon = false-->
+					{% include 'trick/_delete_form.html.twig' with {icon:false} %}
+				{% endif %}
 			</div>
 		</div>
+
 		<div
-			class="container grid-img" id="tricksimages">
+			class="container-fluid px-5 grid-img" id="tricksimages">
 			<!--Image grid-->
-			<div class="row justify-content-center">
+			<div class="row justify-content-center my-4">
+
 				<div class="col-md-6 text-center">
 					{% for image  in trick.imageList[1:] %}
 						{% if loop.index0 is divisible by(3) %}
@@ -37,7 +56,7 @@
 							{% if loop.index is divisible by(3) or loop.last %}
 							</section>
 						{% endif %}
-					{% endfor %}'
+					{% endfor %}
 				</div>
 				<!-- Video grid-->
 				<div class="col-md-6 text-center">
@@ -57,50 +76,52 @@
 				</div>
 			</div>
 		</div>
-		<button class="display-button btn btn-primary" type="button">See More Medias
+		<button class="display-button btn btn-primary mx-auto my-4" type="button">Voir plus de contenus
 		</button>
 
 		<div class="container">
 			<div class="row">
-				<div class="col-md-10">
-					<p>{{ trick.description }}</p>
+				<div class="col-md-12 ">
+					<h2>Description du Trick</h2>
+					<p class="border rounded-sm p-4">{{ trick.description }}</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="details col-md-8">
-					<p>Posté le:
-						{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}
+					<p class="text-muted">
+						<b>Posté le</b>:
+						{{ trick.createdAt ?  trick.createdAt|date('d/m/Y \\à  H:i') : ''}}
 						{% if trick.updatedAt is not null %}
-							,Dernière modification le:
+							, Dernière modification le:
 							{{ trick.updatedAt ? trick.updatedAt|date('Y-m-d H:i:s') : '' }}
 						{% endif %}
 					</p>
-				</div>
-				<div class="details col-md-4">
-					Le Type de Trick:
-					{{ trick.category.name}}
+				</p>
+			</div>
+			<div class="details text-muted">
+				<b>Groupe</b>:
+				{{ trick.category.name}}
+			</div>
+		</div>
+
+		<!-- comments -->
+		<hr>
+		{% if is_granted('ROLE_USER') %}
+			<div class="row justify-content-center">
+				<div class="col-md-8 col-xs-10">
+					{{ form_start(form)}}
+					{{ form_row(form.content)}}
+					{{form_widget(form)}}
+					<button type="submit" class="btn btn-primary">Laisser un commentaire</button>
+					{{form_end(form)}}
 				</div>
 			</div>
 
-			<!-- comments -->
-			{% if is_granted('ROLE_USER') %}
-				<div class="row justify-content-center">
-					<div class="col-md-8 col-xs-10">
-						{{ form_start(form)}}
-						{{ form_row(form.content)}}
-						{{form_widget(form)}}
-						<button type="submit" class="btn btn-primary">Laisser un commentaire</button>
-						{{form_end(form)}}
-					</div>
-				</div>
-			{% endif %}
-
-			<a href="{{ path('home') }}">back to list</a>
-			{% if is_granted('ROLE_USER') %}
-				<a href="{{ path('trick_edit',{'id' : trick.id , 'slug': trick.slug}) }}">edit</a>
-				{{ include('trick/_delete_form.html.twig') }}
-			{% endif %}
+		{% endif %}
+		<div class="d-flex justify-content-center justify-content-sm-end mb-2 ">
+			<a href="{{ path('home') }}" class="btn btn-primary ">Retour</a>
 		</div>
+		<hr>
 		<section id="comments" data-allcomments={{trick.comments |length}} data-path="{{ path('loadMoreComments', {'id': trick.id} ) }}/">
 			{% for comment in trick.comments | slice(0,5) %}
 				<div class="comment row mx-auto">
@@ -116,15 +137,15 @@
 			{% endfor %}
 		</section>
 
+		{% if trick.comments |length > 4 %}
+			<div class="row">
+				<button id="loadMoreComments" class="btn btn-primary col-md-6 col-8 mx-auto">Voir plus de commentaires</button>
+			</div>
+		{% endif %}
 
-		<div class="row text-center">
-			<button id="loadMoreComments" class="btn btn-primary col-md-6 col-8 mx-auto">Voir plus de commentaires</button>
-		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
 
-	{% endblock %}
-	{% block javascripts %}
-
-		{{ encore_entry_script_tags('app') }}
-
-
-	{% endblock %}
+	{{ encore_entry_script_tags('app') }}
+{% endblock %}

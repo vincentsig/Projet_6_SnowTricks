@@ -1,28 +1,82 @@
-h1 {
-  font-style: italic;
+@font-face {
+  font-family: SouthbankLT;
+  src: url(../fonts/SouthbankLT.ttf);
 }
+
+h1 {
+  font-family: 'SouthbankLT', Arial, Helvetica, sans-serif;
+  letter-spacing: 0.1em;
+}
+
+h5 {
+  font-size: 1.3rem;
+}
+
+@media only screen and (max-width: 480px) {
+  h1 {
+    font-size: 2.5rem !important;
+  }
+
+  h2 {
+    font-size: 1.1rem !important;
+  }
+
+  h5 {
+    font-size: 1rem !important;
+  }
+}
+
 
 ul {
   list-style: none;
 }
 
+.wrap {
+  position: relative;
+  padding-bottom: 250px;
+  min-height: 100vh;
+  /* Footer height */
+}
+
+.main {
+  position: relative;
+}
 
 
+/*cover image */
+.mainVisu {
+  background-size: cover;
+  background-position: center center;
+  height: 96vh;
 
-img.fondecran {
-
-  min-height: 100%;
-  min-width: 1024px;
-
-
-  /* Set up proportionate scaling */
   width: 100%;
-  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100px;
+}
 
-  /* Set up positioning */
-  position: fixed;
-  top: 0;
-  left: 0;
+.mainVisu h1 {
+  color: white;
+  font-size: 4em;
+  margin-top: 20px;
+}
+
+.mainVisu h2 {
+  color: white;
+  align-items: center;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 200px;
+
+}
+
+.mainVisu a {
+  border-width: 0.2em;
+  background-color: Transparent;
+  font-weight: bold;
+  bottom: 10%;
 }
 
 
@@ -44,59 +98,9 @@ img.fondecran {
 .carousel-caption h1 {
   text-align: center;
   top: 50%;
-
-
 }
 
 /* Trick*/
-
-.jumbotron {
-  margin-bottom: 100px;
-}
-
-@media (min-width: 992px) {
-  .jumbotron {
-    color: white;
-    background-image: url(../images/default.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    text-align: center;
-  }
-
-
-}
-
-@media (min-width: 320px) and (max-width: 425px) {
-
-  .jumbotron {
-    color: white;
-    background-image: url(../images/default.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    max-height: 300px;
-    text-align: center;
-  }
-
-
-}
-
-@media (min-width: 425px) and (max-width: 992px) {
-
-  .jumbotron {
-    color: white;
-    background-image: url(../images/default.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    max-height: 400px;
-    text-align: center;
-  }
-
-
-}
 
 .icon-cover {
   position: absolute;
@@ -104,11 +108,7 @@ img.fondecran {
 }
 
 
-
-
-.img-fluid.img-thumbnail {}
-
-/*Grid section*/
+/* Show More Button*/
 
 .display-button {
   display: none;
@@ -119,55 +119,11 @@ img.fondecran {
     display: block;
   }
 
-  .container.grid-img {
+  #tricksimages {
     display: none;
   }
 }
 
-/* Un peu d'animation lorsqu'on affiche */
-.container.grid-img {
-  -webkit-animation: fadein 2s;
-  /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 2s;
-  /* Firefox < 16 */
-  -ms-animation: fadein 2s;
-  /* Internet Explorer */
-  -o-animation: fadein 2s;
-  /* Opera < 12.1 */
-  animation: fadein 2s;
-}
-
-@keyframes fadein {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-/* Firefox < 16 */
-@-moz-keyframes fadein {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-/* Safari, Chrome and Opera > 12.1 */
-@-webkit-keyframes fadein {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
 
 /* Comment section */
 
@@ -215,4 +171,49 @@ img.fondecran {
   padding: 7px 10px;
   position: relative;
   margin-bottom: -1px;
+}
+
+/* Home */
+
+.addTrick {
+  max-width: 300px;
+  margin: auto;
+}
+
+svg.svg-inline--fa.fa-arrow-up.fa-w-14 {
+  font-size: 4em;
+  color: #007bff;
+  cursor: pointer;
+}
+
+svg.svg-inline--fa.fa-arrow-up.fa-w-14:hover {
+  color: rgba(0, 123, 255, 0.8);
+}
+
+.editIcon {
+  width: 52px;
+}
+
+/*Footer */
+
+.footer {
+  width: 100%;
+  bottom: 0;
+  margin-top: 25px;
+  background-color: #26272b;
+  padding: 20px 0 20px;
+  position: absolute;
+  text-align: center;
+
+}
+
+.footer ul {
+  padding: 0;
+
+  font-size: 50px;
+}
+
+.footer p {
+  color: white;
+  font-size: 15px;
 }

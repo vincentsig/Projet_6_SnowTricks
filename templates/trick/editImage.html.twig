@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-   {{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('app') }}
 {% endblock %}
-{% block title %}Edit Trick{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-  
-   {{ include('trick/_image_form.html.twig', {'button_label': 'Update'}) }} 
-  
-   
-{% endblock %}
 
+	{{ include('trick/_image_form.html.twig', {'button_label': 'Update'}) }}
+
+
+{% endblock %}

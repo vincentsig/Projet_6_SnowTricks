@@ -7,7 +7,6 @@ use App\Entity\Trick;
 use App\Entity\Comment;
 use App\Form\TrickType;
 use App\Form\CommentType;
-use App\Repository\CommentRepository;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\ImageRepository;
@@ -121,6 +120,7 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trick->SetUpdatedAt(new \DateTime());
             //upload images
             $files = $trick->getImageFiles();
             foreach ($files as $file) {
@@ -134,7 +134,12 @@ class TrickController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('trick_show', [
+                'trick' => $trick,
+                'id' => $trick->getId(),
+                'slug' => $trick->getSlug(),
+
+            ]);
         }
 
         return $this->render('trick/edit.html.twig', [
@@ -165,7 +170,6 @@ class TrickController extends AbstractController
             $filename = $image->getFilename();
             $filesystem->remove($uploader->getTargetDirectory() . '/' . $filename);
         }
-
 
         return $this->redirectToRoute('home');
     }
