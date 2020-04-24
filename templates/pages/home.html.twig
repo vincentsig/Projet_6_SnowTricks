@@ -47,7 +47,7 @@
 						{% if is_granted('ROLE_USER') %}
 							<div class="editIcon d-flex justify-content-between ml-1">
 								<a href="{{ path('trick_edit', {'id': trick.id, 'slug': trick.slug}) }}">
-									<i class="far fa-edit fa-lg" title="editer"></i>
+									<i class="far fa-edit fa-lg mt-1" title="editer"></i>
 								</a>
 								<!-- show delete icon -->
 								{% include 'trick/_delete_form.html.twig' with {'icon':true} %}
