@@ -6,14 +6,20 @@
 {% endblock %}
 
 {% block body %}
-	{% if trick.imageList is empty  %}
-		<!---cover image trick-->
-		<div class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('uploads/images/default.jpg')}}')">
 
-		{% else %}
-			<div class="jumbotron jumbotron-fluid" style="background-image: url('{{asset('upload/'~ trick.imageList[0].filename)}}')">
-			{% endif %}
-			<div class="container">
+	<!--Cover Image-->
+	<div class="container-fluid p-0" style="position:relative;">
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% if trick.imageList is empty  %}
+			<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('uploads/images/default.jpg')}}');">
+
+			{% else %}
+				<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('upload/'~ trick.imageList[0].filename)}}');">
+				{% endif %}
 				<div class="icon-cover">
 					{% if trick.imageList is not empty  %}
 
@@ -23,42 +29,89 @@
 						</a>
 
 						{{ include('trick/_delete_cover_image_form.html.twig') }}
+
 					{% endif %}
 				</div>
-				<h1 class="display-4">{{trick.name}}</h1>
-				<a href="{{ path('trick_show', {'id': trick.id, 'slug': trick.slug}) }}#tricksimages">test</a>
-			</div>
+				<h1 class="display-4">"{{trick.name}}"</h1>
+				<br>
+				<a href="{{ path('trick_edit', {'id' : trick.id , 'slug': trick.slug}) }}#anchorDetails" class="btn btn-pill btn-primary">Mise à jour du trick
+					<br>
+					<i class="fas fa-arrow-down" style="font-size:2em; color:white;"></i>
+				</a>
+			</section>
 		</div>
 
-		<div class="container grid-img" id="tricksimages">
-			<h2>Mise à jour du Trick</h2>
-			<div class="row justify-content-center">
-				{% for image  in trick.imageList[1:] %}
-					<div class="col-md-4 text-center">
-						<img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
-						<div>
-							<a href="{{ path('edit_image', {'id': image.id}) }}">
-								<i class="far fa-edit fa-lg"></i>
-								Modifier
-							</a>
-							{{ include('trick/_delete_image_form.html.twig') }}
-						</div>
-					</div>
 
-				{% endfor %}
-			</div>
-			<div class="row justify-content-center">
-				{{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
+		<div class="container-fluid px-5 grid-img" id="tricksimages">
+			<h2>Mise à jour des médias</h2>
+			<hr>
 
+			<div
+				class="row justify-content-center my-4">
+				<!--Image grid-->
+				<div class="col-md-6 text-center">
+					{% for image  in trick.imageList[1:] %}
+						{% if loop.index0 is divisible by(3) %}
+							<section class="row mb-2 ">
+							{% endif %}
+							<article class="col-md-12 col-lg-4">
+								<img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
+								<div class="editIcon-editTrick d-flex justify-content-end ">
+									<a href="{{ path('edit_image', {'id': image.id}) }}">
+										<i class="far fa-edit fa-lg mt-2" title="edit"></i>
+									</a>
+									<!-- show delete icon -->
+									{{ include('trick/_delete_image_form.html.twig') }}
+								</div>
+							</article>
 
-				<div class="d-flex justify-content-center justify-content-sm-end mb-2 ">
-					<a href="{{ path('trick_edit',{'id' : trick.id , 'slug': trick.slug}) }}" class="btn btn-primary ">Retour</a>
-					{% include 'trick/_delete_form.html.twig' with {'icon':true} %}
+							{% if loop.index is divisible by(3) or loop.last %}
+							</section>
+						{% endif %}
+					{% endfor %}
 				</div>
-
-
+				<!-- Video grid-->
+				<div class="col-md-6  text-center">
+					{% for video in trick.videos %}
+						{% if loop.index0 is divisible by(3) %}
+							<section class="row mb-2  ">
+							{% endif %}
+							<article class="col-md-12 col-lg-4">
+								<div class="embed-responsive embed-responsive-4by3">
+									<iframe width="560" height="315" src="{{ video.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+								<div class="editIcon-editTrick d-flex justify-content-end flex align-items-center">
+									<a href="{{ path('edit_video', {'id': video.id}) }}">
+										<i class="far fa-edit fa-lg mt-1" title="edit"></i>
+									</a>
+									<!-- show delete icon -->
+									{{ include('trick/_delete_video_form.html.twig') }}
+								</div>
+							</article>
+							{% if loop.index is divisible by(3) or loop.last %}
+							</section>
+						{% endif %}
+					{% endfor %}
+				</div>
 			</div>
-
 		</div>
 
+		<div class="container-fluid px-5" id="anchorDetails">
+			<button class="display-button btn btn-primary mx-auto my-4" type="button">Voir plus de contenus
+			</button>
+			<h2>Modifier les informations</h2>
+			<hr>
+		</div>
+
+		<div class="container my-4 trickForm-ctn">
+
+			<div class="mt-4">
+				{{ include('trick/_form.html.twig', {'button_label': 'Mise à jour'}) }}
+				{% include 'trick/_delete_form.html.twig' with {'icon':false} %}
+
+				<a href="{{ path('home') }}" class="btn btn-primary float-right ">Retour</a>
+			</div>
+
+
+		</div>
 	{% endblock %}

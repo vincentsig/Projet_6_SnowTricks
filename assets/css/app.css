@@ -111,8 +111,40 @@ ul {
 
 .icon-cover {
   position: absolute;
-  right: 0px;
+  right: 1em;
+  top: 1em;
 }
+
+.icon-cover a,
+.icon-cover form {
+  background: white;
+  padding: 0.3em 0.5em;
+  margin-bottom: 0.2em;
+  border-radius: 4px;
+  display: block;
+}
+
+.icon-cover form svg {
+  margin-right: 0.2em;
+}
+
+.icon-cover form button {
+  font-weight: bold;
+}
+
+.trickForm-ctn {
+  max-width: 800px;
+}
+
+.trickForm-ctn fieldset {
+  display: none;
+}
+
+.videos {
+  padding: 0;
+
+}
+
 
 
 /* Show More Button*/
@@ -199,6 +231,14 @@ svg.svg-inline--fa.fa-arrow-up.fa-w-14:hover {
 
 .editIcon {
   width: 52px;
+}
+
+.editIcon-editTrick svg {
+  margin-right: 0.2em;
+}
+
+.editIcon-editTrick a {
+  margin-right: 0.2em;
 }
 
 /*Footer */

@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-
 use App\Entity\Trick;
 use App\Form\VideoType;
 use App\Entity\Category;
@@ -11,7 +10,6 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -22,12 +20,14 @@ class TrickType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', null, [
+                'label' => 'Nom'
+            ])
             ->add('description')
             ->add('category', EntityType::class, array(
                 'class' => Category::class,
                 'choice_label' => 'getName',
-                'placeholder' => 'category', 'label' => 'Category',
+                'placeholder' => 'choisissez un groupe de figure', 'label' => 'Groupe',
             ))
 
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -50,25 +50,46 @@ class TrickType extends AbstractType
                     // if the trick object exist already ImageFiles can be Blank.
                     $form->add('imageFiles', FileType::class, [
                         'required' => false,
+                        'label' => 'Images',
                         'multiple' => true
                     ]);
                 }
-            })
-
-            ->add('videos', CollectionType::class, [
-                'entry_type'   => VideoType::class,
-                'entry_options' => ['label' => false],
-                'allow_add'    => true,
-                'allow_delete' => true,
-                'by_reference' => false
-            ]);
+            });
+        if ($options['status'] == 'new') {
+            $builder
+                ->add('videos', CollectionType::class, [
+                    'entry_type'   => VideoType::class,
+                    'label' => 'Entrer une URL Youtue ou Daylimotion',
+                    'entry_options' => ['label' => false],
+                    'allow_add'    => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                ]);
+        }
+        if ($options['status'] == 'edit') {
+            $builder
+                ->add('videos', CollectionType::class, [
+                    'entry_type'   => VideoType::class,
+                    'label' => 'Entrer une URL Youtue ou Daylimotion',
+                    'entry_options' => ['label' => false],
+                    'allow_add'    => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
-            'createdAt' => Null
+            'allow_extra_fields' => true,
+            'createdAt' => null,
         ]);
+        $resolver->setRequired(
+            array(
+                'status'
+            )
+        );
     }
 }

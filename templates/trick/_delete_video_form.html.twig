@@ -1,0 +1,7 @@
+<form method="post" action="{{ path('video_delete', {'id':video.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette vidéo?');">
+	<input type="hidden" name="_method" value="DELETE">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video.id) }}">
+	<button class="btn" title="delete">
+		<i class="fas fa-trash-alt fa-lg"></i>
+	</button>
+</form>

@@ -6,12 +6,14 @@ use App\Entity\Image;
 use App\Entity\Trick;
 use App\Form\ImageType;
 use App\Service\FileUploader;
+use App\Repository\TrickRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/trick")
@@ -19,6 +21,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class ImageController extends AbstractController
 {
 
+    /**
+     * @var ObjectManager
+     */
+    private $em;
+
+    public function __construct(ObjectManager $em)
+    {
+        $this->em = $em;
+    }
 
 
     /**
@@ -26,37 +37,38 @@ class ImageController extends AbstractController
      * @isGranted("ROLE_USER")
      * 
      */
-    public function deleteImage(Request $request, Image $image, FileUploader $uploader): Response
+    public function deleteImage(Request $request, Image $image, TrickRepository $trickRepository, FileUploader $uploader): Response
     {
         $filename = $image->getFilename();
-
+        $trickId = $image->getTrick();
+        $trick = $trickRepository->findOneByid($trickId);
 
         if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($image);
-            $entityManager->flush();
+            $this->em->remove($image);
+            $this->em->flush();
 
             $filesystem = new Filesystem();
             $filesystem->remove($uploader->getTargetDirectory() . '/' . $filename);
         }
 
-
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('trick_edit', [
+            'id' => $trick->getId(),
+            'slug' => $trick->getSlug(),
+        ]);
     }
 
     /**
      * @Route("/{id}", name="cover_delete", methods={"DELETE"})
      * @isGranted("ROLE_ADMIN")
      */
-    public function deleteCover(Request $request, Image $image, Trick $trick, FileUploader $uploader): Response
+    public function deleteCover(Request $request, Image $image,  FileUploader $uploader): Response
     {
         $filename = $image->getFilename();
 
 
         if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($image);
-            $entityManager->flush();
+            $this->em->remove($image);
+            $this->em->flush();
 
             $filesystem = new Filesystem();
             $filesystem->remove($uploader->getTargetDirectory() . '/' . $filename);
@@ -71,9 +83,10 @@ class ImageController extends AbstractController
      * @Route("/{id}/editImage/", name="edit_image", methods={"GET","POST"})
      * @isGranted("ROLE_USER")
      */
-    public function editImage(Request $request, Image $image, FileUploader $fileUploader)
+    public function editImage(Request $request, Image $image, TrickRepository $trickRepository, FileUploader $fileUploader)
     {
-
+        $trickId = $image->getTrick();
+        $trick = $trickRepository->findOneByid($trickId);
         $form = $this->createForm(ImageType::class, $image);
         $form->handleRequest($request);
 
@@ -87,17 +100,17 @@ class ImageController extends AbstractController
 
             $image->setFilename($fileName);
 
-
-
             //------------------------------------------
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($image);
-            $entityManager->flush();
+            $this->em->persist($image);
+            $this->em->flush();
 
             $filesystem = new Filesystem();
             $filesystem->remove($fileUploader->getTargetDirectory() . '/' . $tempfilename);
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('trick_edit', [
+                'id' => $trick->getId(),
+                'slug' => $trick->getSlug(),
+            ]);
         }
 
         return $this->render('trick/editImage.html.twig', [

@@ -27,9 +27,15 @@ class SecurityController extends AbstractController
      */
     private $repository;
 
-    public function __construct(UserRepository $repository)
+    /**
+     * @var ObjectManager
+     */
+    private $em;
+
+    public function __construct(UserRepository $repository, ObjectManager $em)
     {
         $this->repository = $repository;
+        $this->em = $em;
     }
 
 
@@ -75,7 +81,6 @@ class SecurityController extends AbstractController
      */
     public function register(
         Request $request,
-        ObjectManager $em,
         UserPasswordEncoderInterface $encoder,
         \Swift_Mailer $mailer,
         TokenGeneratorInterface $tokenGenerator,
@@ -90,19 +95,17 @@ class SecurityController extends AbstractController
 
         $token = $request->query->get('token');
         if ($token) {
-            $em = $this->getDoctrine()->getManager();
             $user = $this->repository->findOneByConfirmationToken($token);
 
             if ($user === null) {
                 $this->addFlash('success', 'Token Inconnu, veuillez créer un compte valide');
                 return $this->redirectToRoute('home');
             } else {
-                $em = $this->getDoctrine()->getManager();
                 $user = $this->repository->findOneByConfirmationToken($token);
                 $user->setCreatedAt(new \DateTime());
 
                 $user->setConfirmationToken(null);
-                $em->flush();
+                $this->em->flush();
                 $this->addFlash('success', 'votre compte à bien été validé');
                 //login after validation of the ConfirmationToken
                 return $guardHandler->authenticateUserAndHandleSuccess(
@@ -118,9 +121,8 @@ class SecurityController extends AbstractController
 
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $this->em->persist($user);
+            $this->em->flush();
             // generate a url for confirmation account
             $url = $this->generateUrl('app_register', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
 
@@ -152,7 +154,6 @@ class SecurityController extends AbstractController
      */
     public function forgottenPassword(
         Request $request,
-        ObjectManager $em,
         \Swift_Mailer $mailer,
         TokenGeneratorInterface $tokenGenerator
     ): Response {
@@ -166,7 +167,6 @@ class SecurityController extends AbstractController
 
             $email = $form->get('email')->getData();
 
-            $em = $this->getDoctrine()->getManager();
             $user = $this->repository->findOneByEmail($email);
             /* @var $user User */
 
@@ -180,7 +180,7 @@ class SecurityController extends AbstractController
 
             try {
                 $user->setResetToken($token);
-                $em->flush();
+                $this->em->flush();
             } catch (\Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
                 return $this->redirectToRoute('home');
@@ -212,18 +212,15 @@ class SecurityController extends AbstractController
      * @Route("/reset_password/{token}", name="app_reset_password")
      * @param User $user
      */
-    public function resetPassword(Request $request, string $token, ObjectManager $em, UserPasswordEncoderInterface $passwordEncoder)
+    public function resetPassword(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
     {
         $form = $this->createForm(ResetPasswordType::class);
 
         $form->handleRequest($request);
-
-        $em = $this->getDoctrine()->getManager();
         $user = $this->repository->findOneByResetToken($token);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
             $user = $this->repository->findOneByResetToken($token);
 
 
@@ -231,14 +228,10 @@ class SecurityController extends AbstractController
                 $this->addFlash('success', 'Token Inconnu');
                 return $this->redirectToRoute('home');
             }
-
-
             $user->setResetToken(null);
             $user->setPassword($passwordEncoder->encodePassword($user, $form->get('password')->getData()));
-            $em->flush();
-
+            $this->em->flush();
             $this->addFlash('success', 'Mot de passe mis à jour');
-
             return $this->redirectToRoute('home');
         } else {
             return $this->render('security/reset_password.html.twig', [

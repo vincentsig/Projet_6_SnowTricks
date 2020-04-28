@@ -1,6 +1,5 @@
-
 {{ form_start(form) }}
- {{ form_row(form.file, {'label': 'Image', 'attr': {'placeholder':'Ajouter une nouvelle Image...'}}) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('ajouter') }}</button>
+{{ form_row(form.file, {'label': 'Image', 'attr': {'placeholder':'Ajouter une nouvelle Image...'}}) }}
+{{ form_widget(form) }}
+<button class="btn btn-primary">{{ button_label|default('ajouter') }}</button>
 {{ form_end(form) }}

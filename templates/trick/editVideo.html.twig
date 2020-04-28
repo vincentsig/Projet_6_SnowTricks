@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+{% endblock %}
+{% block title %}Modifier une vidéo
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<h2>Modifier une vidéo</h2>
+		{{ include('trick/_video_form.html.twig', {'button_label': 'Modifier'}) }}
+		<div class="embed-responsive embed-responsive-4by3 mt-3">
+			<iframe width="560" height="315" src="{{ video.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
+	</div>
+
+{% endblock %}

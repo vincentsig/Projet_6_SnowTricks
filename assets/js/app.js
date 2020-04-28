@@ -25,17 +25,18 @@ require('@fortawesome/fontawesome-free/js/all.js');
 var $collectionHolder;
 
 // setup an "add a video" link
-var $addVideoButton = $('<button type="button" class="add_video_link">Add a video</button>');
-var $newLinkLi = $('<li></li>').append($addVideoButton);
+var $addVideoButton = $('<button type="button" class="add_video_link btn btn-primary mt-4">Ajouter une nouvelle vidéo</button>');
+var $newLinkLi = $('<li class="test"></li>').append($addVideoButton);
 
 jQuery(document).ready(function () {
     // Get the ul that holds the collection of videos
     $collectionHolder = $('ul.videos');
 
     // add a delete link to all of the existing tag form li elements
-    $collectionHolder.find('li').each(function () {
+    /*$collectionHolder.find('li.').each(function () {
         addVideoFormDeleteLink($(this));
-    });
+    });*/
+
     // add the "add a video" anchor and li to the videos ul
     $collectionHolder.append($newLinkLi);
 
@@ -79,7 +80,7 @@ function addVideoForm($collectionHolder, $newLinkLi) {
 }
 
 function addVideoFormDeleteLink($videoFormLi) {
-    var $removeFormButton = $('<button type="button">Delete this video</button>');
+    var $removeFormButton = $('<button type="button" class="btn btn-danger">Supprimer le champs</button>');
     $videoFormLi.append($removeFormButton);
 
     $removeFormButton.on('click', function (e) {
@@ -88,8 +89,9 @@ function addVideoFormDeleteLink($videoFormLi) {
     });
 }
 
-//--------top button---------------------
 
+
+//--------top button---------------------
 
 //Get the button:
 $("#topScroll").click(function (Event) {

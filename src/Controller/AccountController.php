@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-
 use App\Form\AccountType;
 use App\Service\FileUploader;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -17,6 +17,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class AccountController extends AbstractController
 {
+    /**
+     * @var ObjectManager
+     */
+    private $em;
+
+    public function __construct(ObjectManager $em)
+    {
+        $this->em = $em;
+    }
 
     /**
      * @Route("/index", name="account_index", methods={"GET","POST"})
@@ -48,15 +57,13 @@ class AccountController extends AbstractController
 
             //upload avatar
             $file = $form->get('avatar')->getData();
-
             $filename = $fileUploader->upload($file, $profile);
             //set Avatar to null to avoid serialization of File
             $profile->setAvatar(null);
             $profile->setAvatarFileName($filename);
             //------------------------------------------
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($profile);
-            $entityManager->flush();
+            $this->em->persist($profile);
+            $this->em->flush();
 
             return $this->redirectToRoute('home');
         }

@@ -1,16 +1,27 @@
 {{ form_start(form) }}
 
-
 {{ form_row(form.name) }}
 {{ form_row(form.description) }}
 {{ form_row(form.category) }}
 {{ form_row(form.imageFiles) }}
-<ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
-	{% for video in form.videos %}
 
-		<li>{{ form_row(video.url) }}</li>
 
-	{% endfor %}
-</ul>
-<button class="btn btn-success float-right">{{ button_label|default('Save') }}</button>
+{% if 'new' in status %}
+	<ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
+		{% for video in form.videos %}
+
+			<li>{{ form_row(video.url) }}</li>
+
+		{% endfor %}
+	</ul>
+	<button class="btn btn-success float-right">{{ button_label|default('Save') }}</button>
+
+{% else %}
+	<ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
+		<li>{{ form_row(form.videos) }}</li>
+	</ul>
+
+	<button class="btn btn-success ml-2 float-right">{{ button_label|default('Save') }}</button>
+
+{% endif %}
 {{ form_end(form) }}

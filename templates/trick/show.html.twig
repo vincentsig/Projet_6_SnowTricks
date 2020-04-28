@@ -19,7 +19,7 @@
 			{% else %}
 				<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('upload/'~ trick.imageList[0].filename)}}');">
 				{% endif %}
-				<h1 class="display-4">"{{trick.name}}"</h1>
+				<h1 class="display-4 text-center">"{{trick.name}}"</h1>
 				<br>
 				<a href="{{ path('trick_show', {'id' : trick.id , 'slug': trick.slug}) }}#editButtons" class="btn btn-pill btn-primary">Détails du trick
 					<br>
@@ -28,12 +28,12 @@
 			</section>
 		</div>
 
-
+		<!-- edit and delete button-->
 		<div class="container-fluid px-5" id="editButtons">
 
 			<div class="d-flex justify-content-center justify-content-sm-end mb-2 ">
 				{% if is_granted('ROLE_USER') %}
-					<a href="{{ path('trick_edit',{'id' : trick.id , 'slug': trick.slug}) }}" class="btn btn-primary btn-lg mr-1 ">Modifier</a>
+					<a href="{{ path('trick_edit',{'id' : trick.id , 'slug': trick.slug}) }}" class="btn btn-primary btn mr-1 ">Modifier</a>
 					<!--show delete button if icon = false-->
 					{% include 'trick/_delete_form.html.twig' with {icon:false} %}
 				{% endif %}
@@ -50,7 +50,7 @@
 						{% if loop.index0 is divisible by(3) %}
 							<section class="row mb-2 ">
 							{% endif %}
-							<article class="col-md-4">
+							<article class="col-md-12 col-lg-4 mb-2">
 								<img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
 							</article>
 							{% if loop.index is divisible by(3) or loop.last %}
@@ -64,7 +64,7 @@
 						{% if loop.index0 is divisible by(3) %}
 							<section class="row mb-2 ">
 							{% endif %}
-							<article class="col-md-4">
+							<article class="col-md-12 col-lg-4 mb-2">
 								<div class="embed-responsive embed-responsive-4by3">
 									<iframe width="560" height="315" src="{{ video.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 								</div>
@@ -92,60 +92,57 @@
 						<b>Posté le</b>:
 						{{ trick.createdAt ?  trick.createdAt|date('d/m/Y \\à  H:i') : ''}}
 						{% if trick.updatedAt is not null %}
-							, Dernière modification le:
-							{{ trick.updatedAt ? trick.updatedAt|date('Y-m-d H:i:s') : '' }}
+							<b>, Dernière modification le:</b>
+							{{ trick.updatedAt ? trick.updatedAt|date('d/m/Y \\à  H:i') : '' }}
 						{% endif %}
 					</p>
-				</p>
-			</div>
-			<div class="details text-muted">
-				<b>Groupe</b>:
-				{{ trick.category.name}}
-			</div>
-		</div>
-
-		<!-- comments -->
-		<hr>
-		{% if is_granted('ROLE_USER') %}
-			<div class="row justify-content-center">
-				<div class="col-md-8 col-xs-10">
-					{{ form_start(form)}}
-					{{ form_row(form.content)}}
-					{{form_widget(form)}}
-					<button type="submit" class="btn btn-primary">Laisser un commentaire</button>
-					{{form_end(form)}}
+					<p class="text-muted">
+						<b>Groupe du Trick</b>:
+						{{ trick.category.name}}</p>
 				</div>
+
 			</div>
 
-		{% endif %}
-		<div class="d-flex justify-content-center justify-content-sm-end mb-2 ">
-			<a href="{{ path('home') }}" class="btn btn-primary ">Retour</a>
-		</div>
-		<hr>
-		<section id="comments" data-allcomments={{trick.comments |length}} data-path="{{ path('loadMoreComments', {'id': trick.id} ) }}/">
-			{% for comment in trick.comments | slice(0,5) %}
-				<div class="comment row mx-auto">
-					<div class="col-md-10 col-12 mx-auto row">
-						<img class="avatar" src="{{asset('upload/avatar/' ~ comment.author.profile.avatarFilename)}}">
-						<p class="col-lg-10 col-8 bg-light">
-							<strong>{{ comment.author.username }}</strong>
-							<small class="text-muted">({{ comment.createdAt | date('d/m/Y à H:i') }}) :</small>
-							<br>{{ comment.content }}
-						</p>
+			<!-- comments -->
+			<hr>
+			{% if is_granted('ROLE_USER') %}
+				<div class="row justify-content-center">
+					<div class="col-md-8 col-xs-10">
+						{{ form_start(form)}}
+						{{ form_row(form.content)}}
+						{{form_widget(form)}}
+						<button type="submit" class="btn btn-primary">Laisser un commentaire</button>
+						{{form_end(form)}}
 					</div>
 				</div>
-			{% endfor %}
-		</section>
 
-		{% if trick.comments |length > 4 %}
-			<div class="row">
-				<button id="loadMoreComments" class="btn btn-primary col-md-6 col-8 mx-auto">Voir plus de commentaires</button>
-			</div>
-		{% endif %}
+			{% endif %}
+			<div class="d-flex justify-content-center justify-content-sm-end mb-2 "></div>
+			<hr>
+			<section id="comments" data-allcomments={{trick.comments |length}} data-path="{{ path('loadMoreComments', {'id': trick.id} ) }}/">
+				{% for comment in trick.comments | slice(0,5) %}
+					<div class="comment row mx-auto">
+						<div class="col-md-10 col-12 mx-auto row">
+							<img class="avatar" src="{{asset('upload/avatar/' ~ comment.author.profile.avatarFilename)}}">
+							<p class="col-lg-10 col-8 bg-light">
+								<strong>{{ comment.author.username }}</strong>
+								<small class="text-muted">({{ comment.createdAt | date('d/m/Y à H:i') }}) :</small>
+								<br>{{ comment.content }}
+							</p>
+						</div>
+					</div>
+				{% endfor %}
+			</section>
 
-	</div>
-{% endblock %}
-{% block javascripts %}
+			{% if trick.comments |length > 4 %}
+				<div class="row">
+					<button id="loadMoreComments" class="btn btn-primary col-md-6 col-8 mx-auto">Voir plus de commentaires</button>
+				</div>
+			{% endif %}
 
-	{{ encore_entry_script_tags('app') }}
-{% endblock %}
+		</div>
+	{% endblock %}
+	{% block javascripts %}
+
+		{{ encore_entry_script_tags('app') }}
+	{% endblock %}

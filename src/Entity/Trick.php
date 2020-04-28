@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
@@ -46,7 +46,7 @@ class Trick
     private $imageList;
 
 
-    /**   
+    /**  
      * @Assert\All({
      * @Assert\Image
      *  }) 

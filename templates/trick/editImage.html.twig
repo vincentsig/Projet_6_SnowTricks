@@ -2,11 +2,15 @@
 {% block stylesheets %}
 	{{ encore_entry_link_tags('app') }}
 {% endblock %}
-{% block title %}{% endblock %}
+{% block title %}Modifier une Photo
+{% endblock %}
 
 {% block body %}
-
-	{{ include('trick/_image_form.html.twig', {'button_label': 'Update'}) }}
+	<div class="container mt-5">
+		<h2>Modifier la photo</h2>
+		{{ include('trick/_image_form.html.twig', {'button_label': 'Sauvegarder'}) }}
+		<img class="img-fluid img-thumbnail mt-3" src="{{asset('upload/' ~ image.filename)}}">
+	</div>
 
 
 {% endblock %}
