@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "axios": "^0.19.2",
-        "font-awesome": "^4.7.0"
+        "font-awesome": "^4.7.0",
+        "lightbox2": "^2.11.1"
     }
 }

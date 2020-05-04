@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
 	{{ encore_entry_link_tags('app') }}
+
 {% endblock %}
 {% block title %}Trick
 {% endblock %}
@@ -51,7 +52,7 @@
 							<section class="row mb-2 ">
 							{% endif %}
 							<article class="col-md-12 col-lg-4 mb-2">
-								<img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ image.filename)}}">
+								<a href="{{asset('upload/' ~ image.filename)}}" data-lightbox=" roadtrip"><img class="img-fluid img-thumbnail" data-lightbox="roadtrip" src="{{asset('upload/' ~ image.filename)}}"></a>
 							</article>
 							{% if loop.index is divisible by(3) or loop.last %}
 							</section>
@@ -145,4 +146,5 @@
 	{% block javascripts %}
 
 		{{ encore_entry_script_tags('app') }}
+
 	{% endblock %}

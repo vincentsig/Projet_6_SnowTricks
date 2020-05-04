@@ -7,10 +7,11 @@
 
 // any CSS you require will output into a single css file (app.css in this case)
 import '../css/app.css';
+require('lightbox2/dist/css/lightbox.css');
+require('lightbox2/dist/js/lightbox-plus-jquery.js');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-//const $ = require('jquery');
-
+const $ = require('jquery');
 import axios from 'axios';
 
 console.log('Hello Webpack Encore!!!!!!! Edit me in assets/js/app.js');
