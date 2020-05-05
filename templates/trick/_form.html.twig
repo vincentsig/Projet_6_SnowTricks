@@ -14,14 +14,14 @@
 
 		{% endfor %}
 	</ul>
-	<button class="btn btn-success float-right">{{ button_label|default('Save') }}</button>
+	<button class="btn btn-success float-right">{{ button_label|default('Sauvegarder') }}</button>
 
-{% else %}
+{% elseif 'edit' in status %}
 	<ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
 		<li>{{ form_row(form.videos) }}</li>
 	</ul>
 
-	<button class="btn btn-success ml-2 float-right">{{ button_label|default('Save') }}</button>
+	<button class="btn btn-success ml-2 float-right">{{ button_label|default('Sauvegarder') }}</button>
 
 {% endif %}
 {{ form_end(form) }}

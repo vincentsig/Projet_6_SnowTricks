@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    upload_directory: '%kernel.project_dir%/public/upload/'
+    upload_directory: '%kernel.project_dir%/public/upload/tricksImage'
     upload_directory_avatar: '%kernel.project_dir%/public/upload/avatar'
 
 services:

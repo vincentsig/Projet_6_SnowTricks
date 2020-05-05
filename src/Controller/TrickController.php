@@ -70,12 +70,8 @@ class TrickController extends AbstractController
                 $trick->AddImage($fileName);
             }
             //------------------------------------------
-
-
             $this->em->persist($trick);
             $this->em->flush();
-
-
 
             return $this->redirectToRoute('home');
         }
@@ -178,13 +174,8 @@ class TrickController extends AbstractController
             $this->em->remove($trick);
             $this->em->flush();
         }
+        $uploader->removeAllFiles($images);
 
-        $filesystem = new Filesystem();
-        foreach ($images as $image) {
-
-            $filename = $image->getFilename();
-            $filesystem->remove($uploader->getTargetDirectory() . '/' . $filename);
-        }
 
         return $this->redirectToRoute('home');
     }

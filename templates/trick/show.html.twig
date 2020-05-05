@@ -15,10 +15,10 @@
 			</div>
 		{% endfor %}
 		{% if trick.imageList is empty  %}
-			<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('uploads/images/default.jpg')}}');">
+			<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('uploads/tricksImage/default.jpg')}}');">
 
 			{% else %}
-				<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('upload/'~ trick.imageList[0].filename)}}');">
+				<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('upload/tricksImage/'~ trick.imageList[0].filename)}}');">
 				{% endif %}
 				<h1 class="display-4 text-center">"{{trick.name}}"</h1>
 				<br>
@@ -52,7 +52,7 @@
 							<section class="row mb-2 ">
 							{% endif %}
 							<article class="col-md-12 col-lg-4 mb-2">
-								<a href="{{asset('upload/' ~ image.filename)}}" data-lightbox=" roadtrip"><img class="img-fluid img-thumbnail" data-lightbox="roadtrip" src="{{asset('upload/' ~ image.filename)}}"></a>
+								<a href="{{asset('upload/tricksImage/' ~ image.filename)}}" data-lightbox=" roadtrip"><img class="img-fluid img-thumbnail" data-lightbox="roadtrip" src="{{asset('upload/tricksImage/' ~ image.filename)}}"></a>
 							</article>
 							{% if loop.index is divisible by(3) or loop.last %}
 							</section>

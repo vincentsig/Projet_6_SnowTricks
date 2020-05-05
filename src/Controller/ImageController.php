@@ -47,8 +47,7 @@ class ImageController extends AbstractController
             $this->em->remove($image);
             $this->em->flush();
 
-            $filesystem = new Filesystem();
-            $filesystem->remove($uploader->getTargetDirectory() . '/' . $filename);
+            $uploader->removeFile($image, $filename);
         }
 
         return $this->redirectToRoute('trick_edit', [
@@ -70,8 +69,7 @@ class ImageController extends AbstractController
             $this->em->remove($image);
             $this->em->flush();
 
-            $filesystem = new Filesystem();
-            $filesystem->remove($uploader->getTargetDirectory() . '/' . $filename);
+            $uploader->removeFile($image, $filename);
         }
 
 
@@ -97,7 +95,6 @@ class ImageController extends AbstractController
             $file = $image->getFile();
 
             $fileName = $fileUploader->upload($file, $image);
-
             $image->setFilename($fileName);
 
             //------------------------------------------

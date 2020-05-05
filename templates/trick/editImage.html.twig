@@ -9,7 +9,7 @@
 	<div class="container mt-5">
 		<h2>Modifier la photo</h2>
 		{{ include('trick/_image_form.html.twig', {'button_label': 'Sauvegarder'}) }}
-		<img class="img-fluid img-thumbnail mt-3" src="{{asset('upload/' ~ image.filename)}}">
+		<img class="img-fluid img-thumbnail mt-3" src="{{asset('upload/tricksImage/' ~ image.filename)}}">
 	</div>
 
 

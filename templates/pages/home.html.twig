@@ -12,7 +12,7 @@
 				{{ message }}
 			</div>
 		{% endfor %}
-		<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../uploads/images/fondecran2.jpg);">
+		<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../upload/tricksImage/fondecran2.jpg);">
 			<h1 class="h1-responsive">SnowTricks</h1>
 			<h2>The mountains are calling
 				<br>
@@ -35,10 +35,10 @@
 				{% endif %}
 				<div class="col-sm-6 col-md-3">
 					{% if trick.imageList is empty  %}
-						<a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="img-fluid img-thumbnail" src="{{asset('uploads/images/default.jpg')}}"></a>
+						<a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="img-fluid img-thumbnail" src="{{asset('uploads/tricksImage/default.jpg')}}"></a>
 						<!---cover image trick-->
 					{% else %}
-						<a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="img-fluid img-thumbnail" src="{{asset('upload/' ~ trick.imageList[0].filename)}}"></a>
+						<a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="img-fluid img-thumbnail" src="{{asset('upload/tricksImage/' ~ trick.imageList[0].filename)}}"></a>
 					{% endif %}
 					<!-- trick interactions-->
 					<div class="d-flex infoTrick justify-content-between pr-2 align-items-center ">
