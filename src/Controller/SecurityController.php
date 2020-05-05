@@ -45,7 +45,6 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user   
@@ -202,7 +201,6 @@ class SecurityController extends AbstractController
 
             return $this->redirectToRoute('home');
         }
-
         return $this->render('security/forgotten_password.html.twig', [
             'form' => $form->createView()
         ]);
@@ -222,7 +220,6 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $this->repository->findOneByResetToken($token);
-
 
             if ($user === null) {
                 $this->addFlash('success', 'Token Inconnu');

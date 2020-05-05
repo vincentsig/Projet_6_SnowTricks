@@ -26,7 +26,9 @@ class VideoController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="video_delete", methods={"DELETE"})
+     * @Route("/{id}",
+     *      name="video_delete",
+     *      methods={"DELETE"})
      * @isGranted("ROLE_USER")
      * 
      */
@@ -41,7 +43,6 @@ class VideoController extends AbstractController
             $this->em->remove($video);
             $this->em->flush();
         }
-
         return $this->redirectToRoute('trick_edit', [
             'id' => $trick->getId(),
             'slug' => $trick->getSlug(),
@@ -49,7 +50,9 @@ class VideoController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/editVideo/", name="edit_video", methods={"GET","POST"})
+     * @Route("/{id}/editVideo/",
+     *      name="edit_video",
+     *      methods={"GET","POST"})
      * @isGranted("ROLE_USER")
      */
     public function editVideo(Request $request, Video $video, TrickRepository $trickRepository)
@@ -64,14 +67,11 @@ class VideoController extends AbstractController
             $this->em->persist($video);
             $this->em->flush();
 
-
-
             return $this->redirectToRoute('trick_edit', [
                 'id' => $trick->getId(),
                 'slug' => $trick->getSlug(),
             ]);
         }
-
         return $this->render('trick/editVideo.html.twig', [
             'video' => $video,
             'form' => $form->createView(),

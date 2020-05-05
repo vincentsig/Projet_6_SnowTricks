@@ -30,9 +30,10 @@ class ImageController extends AbstractController
         $this->em = $em;
     }
 
-
     /**
-     * @Route("/{id}", name="image_delete", methods={"DELETE"})
+     * @Route("/{id}",
+     *      name="image_delete",
+     *      methods={"DELETE"})
      * @isGranted("ROLE_USER")
      * 
      */
@@ -56,13 +57,14 @@ class ImageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="cover_delete", methods={"DELETE"})
+     * @Route("/{id}",
+     *      name="cover_delete",
+     *      methods={"DELETE"})
      * @isGranted("ROLE_ADMIN")
      */
     public function deleteCover(Request $request, Image $image,  FileUploader $uploader): Response
     {
         $filename = $image->getFilename();
-
 
         if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->request->get('_token'))) {
             $this->em->remove($image);
@@ -70,14 +72,14 @@ class ImageController extends AbstractController
 
             $uploader->removeFile($image, $filename);
         }
-
-
         return $this->redirectToRoute('home');
     }
 
 
     /**
-     * @Route("/{id}/editImage/", name="edit_image", methods={"GET","POST"})
+     * @Route("/{id}/editImage/",
+     *      name="edit_image",
+     *      methods={"GET","POST"})
      * @isGranted("ROLE_USER")
      */
     public function editImage(Request $request, Image $image, TrickRepository $trickRepository, FileUploader $fileUploader)
@@ -88,15 +90,11 @@ class ImageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //upload images
             $tempfilename = $image->getFilename();
-
             $file = $image->getFile();
-
             $fileName = $fileUploader->upload($file, $image);
             $image->setFilename($fileName);
 
-            //------------------------------------------
             $this->em->persist($image);
             $this->em->flush();
 
@@ -108,7 +106,6 @@ class ImageController extends AbstractController
                 'slug' => $trick->getSlug(),
             ]);
         }
-
         return $this->render('trick/editImage.html.twig', [
             'image' => $image,
             'form' => $form->createView(),

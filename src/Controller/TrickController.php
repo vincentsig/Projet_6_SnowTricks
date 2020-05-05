@@ -22,7 +22,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class TrickController extends AbstractController
 {
-
     /**
      * @var ObjectManager
      */
@@ -34,7 +33,9 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/", name="trick_index", methods={"GET"})
+     * @Route("/",
+     *      name="trick_index",
+     *      methods={"GET"})
      */
     public function index(TrickRepository $trickRepository): Response
     {
@@ -44,7 +45,9 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="trick_new", methods={"GET","POST"})
+     * @Route("/new",
+     *      name="trick_new",
+     *      methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
     public function new(Request $request, FileUploader $fileUploader): Response
@@ -54,32 +57,26 @@ class TrickController extends AbstractController
         ];
         $trick = new Trick();
 
-        $trick->setCreatedAt(new \DateTime());
+        $trick->setCreatedAt(new DateTime());
         $form = $this->createForm(TrickType::class, $trick, $status);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-
-            //upload images
             $files = $trick->getImageFiles();
             foreach ($files as $file) {
                 $fileName = $fileUploader->upload($file, $trick);
-
                 $trick->AddImage($fileName);
             }
-            //------------------------------------------
+
             $this->em->persist($trick);
             $this->em->flush();
 
             return $this->redirectToRoute('home');
         }
-
         return $this->render('trick/new.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
             'status' => $status
-
         ]);
     }
 
@@ -103,14 +100,12 @@ class TrickController extends AbstractController
             $this->em->persist($comment);
             $this->em->flush();
 
-            return $this->redirectToRoute('trick_show', array(
+            return $this->redirectToRoute('trick_show', [
                 'id' => $trick->getId(),
                 'category' => $trick->getCategory(),
                 'slug' => $trick->getSlug()
-
-            ));
+            ]);
         }
-
         return $this->render('trick/show.html.twig', [
             'trick'     => $trick,
             'comment'   => $comment,
@@ -120,7 +115,9 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}/{slug}", name="trick_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}/{slug}",
+     *      name="trick_edit",
+     *      methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Trick $trick, FileUploader $fileUploader): Response
@@ -131,14 +128,11 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $trick->SetUpdatedAt(new DateTime());
-            //upload images
             $files = $trick->getImageFiles();
             foreach ($files as $file) {
-
                 $fileName = $fileUploader->upload($file, $trick);
                 $trick->AddImage($fileName);
             }
-            //------------------------------------------
             $this->em->persist($trick);
             $this->em->flush();
 
@@ -149,17 +143,17 @@ class TrickController extends AbstractController
 
             ]);
         }
-
         return $this->render('trick/edit.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
             'status' => $status,
-
         ]);
     }
 
     /**
-     * @Route("/{id}/delete", name="trick_delete", methods={"DELETE","POST"})
+     * @Route("/{id}/delete",
+     *      name="trick_delete",
+     *      methods={"DELETE","POST"})
      * @IsGranted("ROLE_USER")
      */
     public function deleteTrick(Request $request, Trick $trick, ImageRepository $imageRepository, FileUploader $uploader): Response
@@ -172,14 +166,15 @@ class TrickController extends AbstractController
         }
         $uploader->removeAllFiles($images);
 
-
         return $this->redirectToRoute('home');
     }
 
     /**
      * Get the 5 next comments in the database and create a Twig file with them that will be displayed via Javascript
      * 
-     * @Route("/{id}/{start}", name="loadMoreComments", requirements={"start": "\d+"})
+     * @Route("/{id}/{start}",
+     *      name="loadMoreComments",
+     *      requirements={"start": "\d+"})
      */
     public function loadMoreComments(TrickRepository $trickRepository, $id, $start = 5)
     {
