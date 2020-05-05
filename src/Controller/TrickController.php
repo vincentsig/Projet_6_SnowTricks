@@ -11,7 +11,6 @@ use App\Service\FileUploader;
 use App\Repository\ImageRepository;
 use App\Repository\TrickRepository;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -85,28 +84,25 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/show/{id}/{slug}", name="trick_show", methods={"GET", "POST"})
+     * @Route("/show/{id}/{slug}",
+     *      name="trick_show",
+     *      methods={"GET", "POST"})
      */
     public function show(Request $request, Trick $trick): Response
     {
-
+        $user = $this->getUser();
         $comment = new Comment();
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-
-
-        $user = $this->getUser();
-
-
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setAuthor($user)
-                ->setCreatedAt(new \DateTime())
+                ->setCreatedAt(new DateTime())
                 ->setTrick($trick);
-
 
             $this->em->persist($comment);
             $this->em->flush();
+
             return $this->redirectToRoute('trick_show', array(
                 'id' => $trick->getId(),
                 'category' => $trick->getCategory(),

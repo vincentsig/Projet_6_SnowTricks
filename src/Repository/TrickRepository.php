@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Trick;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 

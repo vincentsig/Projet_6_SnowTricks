@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Image;
-use App\Entity\Trick;
 use App\Form\ImageType;
 use App\Service\FileUploader;
 use App\Repository\TrickRepository;
