@@ -1,0 +1,6 @@
+{{ form_start(form) }}
+
+{{ form_row(form.name)}}
+{{form_row(form.description)}}
+<button class="btn btn-success ml-2 float-right">{{ button_label|default('Sauvegarder') }}</button>
+{{form_end(form)}}

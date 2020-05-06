@@ -32,7 +32,6 @@ class VideoController extends AbstractController
      * @isGranted("ROLE_USER")
      * 
      */
-
     public function deleteVideo(Request $request, Video $video, TrickRepository $trickRepository): Response
     {
         $trickId = $video->getTrick();
