@@ -36,11 +36,6 @@ class Image
     private $file;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $alt;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="imageList")
      */
     private $trick;
@@ -65,20 +60,6 @@ class Image
     public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
-    }
-
-
-
-    public function getAlt(): ?string
-    {
-        return $this->alt;
-    }
-
-    public function setAlt(?string $alt): self
-    {
-        $this->alt = $alt;
-
-        return $this;
     }
 
     public function getTrick(): ?Trick

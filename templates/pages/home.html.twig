@@ -42,10 +42,10 @@
 				{% endif %}
 				<div class="col-sm-6 col-md-3">
 					{% if trick.imageList is empty  %}
-						<a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="img-fluid img-thumbnail" src="{{asset('uploads/tricksImage/default.jpg')}}"></a>
+						<a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="img-fluid img-thumbnail" src="{{asset('upload/tricksImage/default.jpg')}}" alt="trick-image"></a>
 						<!---cover image trick-->
 					{% else %}
-						<a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="img-fluid img-thumbnail" src="{{asset('upload/tricksImage/' ~ trick.imageList[0].filename)}}"></a>
+						<a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="img-fluid img-thumbnail" src="{{asset('upload/tricksImage/' ~ trick.imageList[0].filename)}}" alt="trick-image"></a>
 					{% endif %}
 					<!-- trick interactions-->
 					<div class="d-flex infoTrick justify-content-between pr-2 align-items-center ">
@@ -70,7 +70,7 @@
 		{% if tricks|length > 8  %}
 			<div class="col text-center">
 				<a id="topScroll" title="Go to top" style="position:center">
-					<i class="fas fa-arrow-up"></i>
+					<i class="fas fa-arrow-up" title="Remonter-page"></i>
 				</a>
 			</div>
 		{% endif %}

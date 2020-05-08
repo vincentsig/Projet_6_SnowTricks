@@ -15,16 +15,18 @@
 			</div>
 		{% endfor %}
 		{% if trick.imageList is empty  %}
-			<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('upload/tricksImage/default.jpg')}}');">
+			<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),
+													url('{{asset('upload/tricksImage/default.jpg')}}');">
 
 			{% else %}
-				<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('upload/tricksImage/'~ trick.imageList[0].filename)}}');">
+				<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),
+															 url('{{asset('upload/tricksImage/'~ trick.imageList[0].filename)}}');">
 				{% endif %}
 				<div class="icon-cover">
 					{% if trick.imageList is not empty  %}
 
 						<a href="{{ path('edit_image', {'id': trick.imageList[0].id}) }}">
-							<i class="far fa-edit fa-lg"></i>
+							<i class="far fa-edit fa-lg" title="modifier"></i>
 							Modifier
 						</a>
 
@@ -36,7 +38,7 @@
 				<br>
 				<a href="{{ path('trick_edit', {'id' : trick.id , 'slug': trick.slug}) }}#anchorDetails" class="btn btn-pill btn-primary">Mise à jour du trick
 					<br>
-					<i class="fas fa-arrow-down" style="font-size:2em; color:white;"></i>
+					<i class="fas fa-arrow-down" style="font-size:2em; color:white;" title="modifier"></i>
 				</a>
 			</section>
 		</div>
@@ -55,12 +57,12 @@
 							<section class="row mb-2 ">
 							{% endif %}
 							<article class="col-md-12 col-lg-4">
-								<a href="{{asset('upload/tricksImage/' ~ image.filename)}}" data-lightbox=" roadtrip"><img class="img-fluid img-thumbnail" data-lightbox="roadtrip" src="{{asset('upload/tricksImage/' ~ image.filename)}}"></a>
+								<a href="{{asset('upload/tricksImage/' ~ image.filename)}}" data-lightbox=" image-full"><img class="img-fluid img-thumbnail" alt="trick-image" data-lightbox="image-full" src="{{asset('upload/tricksImage/' ~ image.filename)}}"></a>
 								<div class="editIcon-editTrick d-flex justify-content-end ">
 									<a href="{{ path('edit_image', {'id': image.id}) }}">
-										<i class="far fa-edit fa-lg mt-2" title="edit"></i>
+										<i class="far fa-edit fa-lg mt-2" title="modifier"></i>
 									</a>
-									<!-- show delete icon -->
+									<!-- Show delete icon -->
 									{{ include('trick/_delete_image_form.html.twig') }}
 								</div>
 							</article>
@@ -78,13 +80,13 @@
 							{% endif %}
 							<article class="col-md-12 col-lg-4">
 								<div class="embed-responsive embed-responsive-4by3">
-									<iframe width="560" height="315" src="{{ video.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									<iframe width="560" height="315" src="{{ video.url }}" alt="video-trick" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 								</div>
 								<div class="editIcon-editTrick d-flex justify-content-end flex align-items-center">
 									<a href="{{ path('edit_video', {'id': video.id}) }}">
-										<i class="far fa-edit fa-lg mt-1" title="edit"></i>
+										<i class="far fa-edit fa-lg mt-1" title="modifier"></i>
 									</a>
-									<!-- show delete icon -->
+									<!-- Show delete icon -->
 									{{ include('trick/_delete_video_form.html.twig') }}
 								</div>
 							</article>
@@ -111,7 +113,5 @@
 
 				<a href="{{ path('home') }}" class="btn btn-primary float-right ">Retour</a>
 			</div>
-
-
 		</div>
 	{% endblock %}
