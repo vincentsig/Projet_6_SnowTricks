@@ -25,9 +25,16 @@
 		</section>
 	</div>
 
-	<div class="container-fluid grid-img px-5" id="trickslist">
+	<div class="container-fluid grid-img px-5  justify-content-center" id="trickslist">
 		{% if is_granted('ROLE_USER') %}
-			<a href="{{ path('trick_new')}}" class="addTrick btn btn-primary btn-lg btn-block my-4" role"button">Ajouter un Trick</a>
+			<div class="d-flex align-items-center ">
+				<div class="m-auto d-flex justify-content-center flex-wrap ">
+					<a href="{{ path('trick_new')}}" class="addTrick btn btn-primary btn-lg btn-block my-4 d-block w-auto mx-2" role"button">Ajouter un Trick</a>
+					<a href="{{ path('category_new')}}" class="addTrick btn btn-primary btn-lg btn-block my-4 d-block w-auto mx-2" role"button">Ajouter un Groupe</a>
+				</div>
+
+			</div>
+
 		{% endif %}
 		{% for trick in tricks %}
 			{% if loop.index0 is divisible by(4) %}
