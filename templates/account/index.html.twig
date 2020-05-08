@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-	Mon Compte
+	Mon Profil
 {% endblock %}
 {% block body %}
-	<div>
-		{{user.email}}
-		<img class="avatar-full" src="{{asset('upload/avatar/' ~ user.profile.avatarFileName)}}">
-
-
+	<div class="container my-4 ">
+		<div class="row d-block overflow-hidden mb-4 ">
+			<h1 class="text-center float-lg-left d-block">Bonjour,
+				{{user.profile.firstname}}!</h1>
+			<img class="avatar-full mx-auto float-lg-right  d-block mb-4" src="{{asset('upload/avatar/' ~ user.profile.avatarFileName)}}">
+		</div>
+		<hr>
+		{{ include('account/_form.html.twig') }}
 	</div>
-
-
 {% endblock %}

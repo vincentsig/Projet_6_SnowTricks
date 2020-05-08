@@ -1,0 +1,15 @@
+<div>
+	<p>
+		<b>Vous pouvez modifier les informations lié à votre compte ci-dessous</b>
+	</p>
+
+	{{ form_start(form)}}
+	{{ form_row(form.firstname) }}
+	{{ form_row(form.lastname) }}
+	{{ form_row(form.presentation) }}
+	{{ form_row(form.avatar) }}
+
+	{{form_widget(form)}}
+	<button type="submit" class="btn btn-success">Sauvegarder</button>
+	{{form_end(form)}}
+</div></p>

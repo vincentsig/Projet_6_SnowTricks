@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\User;
 use App\Entity\Profile;
 
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -20,9 +20,28 @@ class AccountType extends AbstractType
         $builder
 
 
-            ->add('firstname')
-            ->add('lastname')
-            ->add('avatar', FileType::class);
+            ->add('firstname', null, ['label' => 'Prénom'])
+            ->add('lastname', null, ['label' => 'Nom'])
+            ->add('presentation', null, ['label' => 'Présentation'])
+            ->add(
+                'avatar',
+                FileType::class,
+                [
+                    'required' => false,
+                    'mapped' => false,
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '1024k',
+                            'mimeTypes' => [
+                                'image/jpeg',
+                                'image/png',
+                                'image/jpg'
+                            ],
+                            'mimeTypesMessage' => 'Le document doit être une image avec une extension en .jpeg .jpg .png'
+                        ])
+                    ]
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)

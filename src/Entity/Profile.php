@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProfileRepository")
@@ -19,7 +19,7 @@ class Profile
 
     public function __construct()
     {
-        $this->setAvatarFileName('default');
+        $this->setAvatarFileName('default-profile.png');
     }
 
     /**
@@ -38,7 +38,7 @@ class Profile
     private $avatarFileName;
 
     /**
-     * @var File
+     * 
      */
     private $avatar;
 
@@ -46,6 +46,11 @@ class Profile
      * @ORM\OneToOne(targetEntity="App\Entity\User", mappedBy="profile", cascade={"persist", "remove"})
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="text",  nullable=true)
+     */
+    private $presentation;
 
     public function getId(): ?int
     {
@@ -121,6 +126,18 @@ class Profile
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getPresentation(): ?string
+    {
+        return $this->presentation;
+    }
+
+    public function setPresentation(?string $presentation): self
+    {
+        $this->presentation = $presentation;
 
         return $this;
     }

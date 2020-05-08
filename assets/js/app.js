@@ -138,7 +138,7 @@ function lastClick() {
 
 
 }
-//the path to the comment view
+//the path  to the comment view
 var path = $('#comments').data('path');
 
 function loadMoreComments(event) {

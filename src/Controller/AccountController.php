@@ -32,22 +32,7 @@ class AccountController extends AbstractController
      *      name="account_index",
      *      methods={"GET","POST"})
      */
-    public function index(): Response
-    {
-        $user = $this->getUser();
-
-        return $this->render('account/index.html.twig', [
-            'user' => $user,
-
-        ]);
-    }
-
-    /**
-     * @Route("/edit",
-     *      name="account_edit",
-     *      methods={"GET","POST"})
-     */
-    public function edit(Request $request, FileUploader $fileUploader): Response
+    public function index(Request $request, FileUploader $fileUploader): Response
     {
         $user = $this->getUser();
         $profile = $user->getProfile();
@@ -57,16 +42,19 @@ class AccountController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $file = $form->get('avatar')->getData();
-            $filename = $fileUploader->upload($file, $profile);
-            //set Avatar to null to avoid serialization of File
-            $profile->setAvatar(null);
-            $profile->setAvatarFileName($filename);
+            if ($file) {
+                $avatarfile = $profile->getAvatarFileName();
+                $filename = $fileUploader->upload($file, $profile);
+                $profile->setAvatarFileName($filename);
+                $fileUploader->removeFile($profile, $avatarfile);
+            }
+
             $this->em->persist($profile);
             $this->em->flush();
 
             return $this->redirectToRoute('home');
         }
-        return $this->render('account/edit.html.twig', [
+        return $this->render('account/index.html.twig', [
             'profile' => $profile,
             'user' => $user,
             'form' => $form->createView()
