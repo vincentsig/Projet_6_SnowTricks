@@ -19,6 +19,13 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    public function findLastComment($trickid)
+    {
+        return $this->findBy(
+            ['trick' => $trickid],
+            ['createdAt' => 'DESC']
+        );
+    }
     // /**
     //  * @return Comment[] Returns an array of Comment objects
     //  */

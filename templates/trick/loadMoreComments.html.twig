@@ -1,7 +1,7 @@
-{% for comment in trick.comments | slice(start, start + 5) %}
+{% for comment in lastcomments | slice(start, start + 5) %}
 	<div class="comment row mx-auto">
 		<div class="col-md-10 col-12 mx-auto row">
-			<div class="userImage col-lg-2 col-4"></div>
+			<img class="avatar" src="{{asset('upload/avatar/' ~ comment.author.profile.avatarFilename)}}">
 			<p class="col-lg-10 col-8 bg-light">
 				<strong>{{ comment.author.username }}</strong>
 				<small class="text-muted">({{ comment.createdAt | date('d/m/Y à H:i') }}) :</small>

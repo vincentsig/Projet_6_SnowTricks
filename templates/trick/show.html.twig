@@ -16,7 +16,6 @@
 		{% endfor %}
 		{% if trick.imageList is empty  %}
 			<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('uploads/tricksImage/default.jpg')}}');">
-
 			{% else %}
 				<section class="mainVisu" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{asset('upload/tricksImage/'~ trick.imageList[0].filename)}}');">
 				{% endif %}
@@ -28,7 +27,6 @@
 				</a>
 			</section>
 		</div>
-
 		<!-- edit and delete button-->
 		<div class="container-fluid px-5" id="editButtons">
 
@@ -40,7 +38,6 @@
 				{% endif %}
 			</div>
 		</div>
-
 		<div
 			class="container-fluid px-5 grid-img" id="tricksimages">
 			<!--Image grid-->
@@ -79,7 +76,7 @@
 		</div>
 		<button class="display-button btn btn-primary mx-auto my-4" type="button">Voir plus de contenus
 		</button>
-
+		<!-- Trick details-->
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 ">
@@ -101,9 +98,7 @@
 						<b>Groupe du Trick</b>:
 						{{ trick.category.name}}</p>
 				</div>
-
 			</div>
-
 			<!-- comments -->
 			<hr>
 			{% if is_granted('ROLE_USER') %}
@@ -116,12 +111,11 @@
 						{{form_end(form)}}
 					</div>
 				</div>
-
 			{% endif %}
 			<div class="d-flex justify-content-center justify-content-sm-end mb-2 "></div>
 			<hr>
-			<section id="comments" data-allcomments={{trick.comments |length}} data-path="{{ path('loadMoreComments', {'id': trick.id} ) }}/">
-				{% for comment in trick.comments | slice(0,5) %}
+			<section id="comments" data-allcomments={{lastcomments |length}} data-path="{{ path('loadMoreComments', {'id': trick.id} ) }}/">
+				{% for comment in lastcomments | slice(0,5) %}
 					<div class="comment row mx-auto">
 						<div class="col-md-10 col-12 mx-auto row">
 							<img class="avatar" src="{{asset('upload/avatar/' ~ comment.author.profile.avatarFilename)}}">
@@ -134,13 +128,12 @@
 					</div>
 				{% endfor %}
 			</section>
-
-			{% if trick.comments |length > 4 %}
+			<!-- loadmore comments button-->
+			{% if lastcomments |length > 4 %}
 				<div class="row">
 					<button id="loadMoreComments" class="btn btn-primary col-md-6 col-8 mx-auto">Voir plus de commentaires</button>
 				</div>
 			{% endif %}
-
 		</div>
 	{% endblock %}
 	{% block javascripts %}

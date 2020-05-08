@@ -10,8 +10,9 @@ use App\Form\CommentType;
 use App\Service\FileUploader;
 use App\Repository\ImageRepository;
 use App\Repository\TrickRepository;
-use Doctrine\Common\Persistence\ObjectManager;
+use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -85,10 +86,11 @@ class TrickController extends AbstractController
      *      name="trick_show",
      *      methods={"GET", "POST"})
      */
-    public function show(Request $request, Trick $trick): Response
+    public function show(Request $request, Trick $trick, CommentRepository $commentRepository): Response
     {
         $user = $this->getUser();
         $comment = new Comment();
+        $lastcomments = $commentRepository->findLastComment($trick->getId());
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -108,6 +110,7 @@ class TrickController extends AbstractController
         }
         return $this->render('trick/show.html.twig', [
             'trick'     => $trick,
+            'lastcomments' => $lastcomments,
             'comment'   => $comment,
             'user'      => $user,
             'form'      => $form->createView(),
@@ -176,12 +179,11 @@ class TrickController extends AbstractController
      *      name="loadMoreComments",
      *      requirements={"start": "\d+"})
      */
-    public function loadMoreComments(TrickRepository $trickRepository, $id, $start = 5)
+    public function loadMoreComments(CommentRepository $commentRepository, $id, $start = 5)
     {
-        $trick = $trickRepository->findOneByid($id);
-
+        $lastcomments = $commentRepository->findLastComment($id);
         return $this->render('trick/loadMoreComments.html.twig', [
-            'trick' => $trick,
+            'lastcomments' => $lastcomments,
             'start' => $start
         ]);
     }
