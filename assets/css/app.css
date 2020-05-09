@@ -29,12 +29,10 @@ h5 {
 }
 
 @media only screen and (max-width: 768px) {
-
   h5 {
     font-size: 14px !important;
   }
 }
-
 
 ul {
   list-style: none;
@@ -44,6 +42,7 @@ ul {
   position: relative;
   padding-bottom: 250px;
   min-height: 100vh;
+
   /* Footer height */
 }
 
@@ -51,8 +50,8 @@ ul {
   position: relative;
 }
 
+/* cover image */
 
-/*cover image */
 .mainVisu {
   background-size: cover;
   background-position: center center;
@@ -88,15 +87,15 @@ ul {
   bottom: 10%;
 }
 
-
-
 @media screen and (max-width: 1024px) {
 
   /* Specific to this particular image */
+
   img.bg {
     left: 50%;
     margin-left: -512px;
     /* 50% */
+
   }
 }
 
@@ -109,7 +108,7 @@ ul {
   top: 50%;
 }
 
-/* Trick*/
+/* Trick */
 
 .icon-cover {
   position: absolute;
@@ -148,12 +147,9 @@ legend {
 
 .videos {
   padding: 0;
-
 }
 
-
-
-/* Show More Button*/
+/* Show More Button */
 
 .display-button {
   display: none;
@@ -168,7 +164,6 @@ legend {
     display: none;
   }
 }
-
 
 /* Comment section */
 
@@ -257,12 +252,10 @@ svg.svg-inline--fa.fa-arrow-up.fa-w-14:hover {
   padding: 20px 0 20px;
   position: absolute;
   text-align: center;
-
 }
 
 .footer ul {
   padding: 0;
-
   font-size: 50px;
 }
 
