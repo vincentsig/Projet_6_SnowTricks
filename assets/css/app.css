@@ -50,13 +50,45 @@ ul {
   position: relative;
 }
 
+/* Home */
+
+.addTrick {
+  max-width: 300px;
+  margin: auto;
+}
+
+svg.svg-inline--fa.fa-arrow-up.fa-w-14 {
+  font-size: 4em;
+  color: #007bff;
+  cursor: pointer;
+}
+
+svg.svg-inline--fa.fa-arrow-up.fa-w-14:hover {
+  color: rgba(0, 123, 255, 0.8);
+}
+
+.editIcon {
+  width: 52px;
+}
+
+.editIcon-editTrick svg {
+  margin-right: 0.2em;
+}
+
+.editIcon-editTrick a {
+  margin-right: 0.2em;
+}
+
+
+
+
+
 /* cover image */
 
 .mainVisu {
   background-size: cover;
   background-position: center center;
   height: 96vh;
-
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -77,7 +109,6 @@ ul {
   text-align: center;
   margin-top: 15px;
   margin-bottom: 200px;
-
 }
 
 .mainVisu a {
@@ -88,14 +119,13 @@ ul {
 }
 
 @media screen and (max-width: 1024px) {
-
   /* Specific to this particular image */
 
   img.bg {
     left: 50%;
     margin-left: -512px;
-    /* 50% */
 
+    /* 50% */
   }
 }
 
@@ -198,7 +228,6 @@ legend {
 .comment-box .media-body p {
   border: 1px solid #ddd;
   padding: 10px;
-
 }
 
 .comment-box .media-body .media p {
@@ -213,38 +242,10 @@ legend {
   margin-bottom: -1px;
 }
 
-/* Home */
 
-.addTrick {
-  max-width: 300px;
-  margin: auto;
-}
+/* Footer */
 
-svg.svg-inline--fa.fa-arrow-up.fa-w-14 {
-  font-size: 4em;
-  color: #007bff;
-  cursor: pointer;
-}
-
-svg.svg-inline--fa.fa-arrow-up.fa-w-14:hover {
-  color: rgba(0, 123, 255, 0.8);
-}
-
-.editIcon {
-  width: 52px;
-}
-
-.editIcon-editTrick svg {
-  margin-right: 0.2em;
-}
-
-.editIcon-editTrick a {
-  margin-right: 0.2em;
-}
-
-/*Footer */
-
-.footer {
+footer {
   width: 100%;
   bottom: 0;
   margin-top: 25px;
@@ -254,12 +255,12 @@ svg.svg-inline--fa.fa-arrow-up.fa-w-14:hover {
   text-align: center;
 }
 
-.footer ul {
+footer ul {
   padding: 0;
   font-size: 50px;
 }
 
-.footer p {
+footer p {
   color: white;
   font-size: 15px;
 }
