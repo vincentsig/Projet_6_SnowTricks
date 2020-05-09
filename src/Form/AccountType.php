@@ -18,8 +18,6 @@ class AccountType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
-
             ->add('firstname', null, ['label' => 'Prénom'])
             ->add('lastname', null, ['label' => 'Nom'])
             ->add('presentation', null, ['label' => 'Présentation'])
@@ -27,8 +25,12 @@ class AccountType extends AbstractType
                 'avatar',
                 FileType::class,
                 [
+                    'attr' => [
+                        'placeholder' => 'Ajouter ou modifier votre avatar'
+                    ],
                     'required' => false,
                     'mapped' => false,
+
                     'constraints' => [
                         new File([
                             'maxSize' => '1024k',

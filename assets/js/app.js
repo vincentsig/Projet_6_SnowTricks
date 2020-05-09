@@ -114,7 +114,6 @@ function topFunction() {
 
 
 
-
 //------ button "view more" on small screen---------
 
 $(".display-button").click(function () {
@@ -126,17 +125,13 @@ $(".display-button").click(function () {
 //---------- button "load more comments"--------------------
 var click = 0;
 var CountNumber = $('#comments').data('allcomments');
-var start = 0; {
+var start = 0;
 
-}
 //if there is no more comments to load we hide the button
 function lastClick() {
     if (start > CountNumber) {
         $('#loadMoreComments').hide();
     }
-} {
-
-
 }
 //the path  to the comment view
 var path = $('#comments').data('path');
@@ -159,5 +154,4 @@ function loadMoreComments(event) {
     });
     lastClick();
 }
-
 document.getElementById("loadMoreComments").addEventListener("click", loadMoreComments);

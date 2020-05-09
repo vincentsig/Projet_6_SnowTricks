@@ -21,13 +21,20 @@ class TrickType extends AbstractType
     {
         $builder
             ->add('name', null, [
-                'label' => 'Nom'
+                'label' => 'Nom',
+                'attr' => [
+                    'placeholder' => 'Saisissez le nom de la figure',
+                ]
             ])
-            ->add('description')
+            ->add('description', null, [
+                'attr' => [
+                    'placeholder' => 'Decrivez les spécificités de la figure',
+                ]
+            ])
             ->add('category', EntityType::class, array(
                 'class' => Category::class,
                 'choice_label' => 'getName',
-                'placeholder' => 'choisissez un groupe de figure', 'label' => 'Groupe',
+                'placeholder' => 'Choisissez un groupe de figure', 'label' => 'Groupe',
             ))
 
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -38,6 +45,10 @@ class TrickType extends AbstractType
                 // This should be considered a new "trick" so constraints is NotBlank for the imageFiles
                 if (!$trick || null === $trick->getId()) {
                     $form->add('imageFiles', FileType::class, [
+                        'label' => 'Image(s)',
+                        'attr' => [
+                            'placeholder' => 'Veuillez choisir une image de type .jpg, .jpeg ou .png '
+                        ],
                         'constraints' => [
                             new NotBlank([
                                 'message' => 'Vous devez au moins ajouter une image'
@@ -49,8 +60,11 @@ class TrickType extends AbstractType
                 } else {
                     // if the trick object exist already ImageFiles can be Blank.
                     $form->add('imageFiles', FileType::class, [
+                        'label' => 'Image(s)',
+                        'attr' => [
+                            'placeholder' => 'Veuillez choisir une image de type .jpg, .jpeg ou .png '
+                        ],
                         'required' => false,
-                        'label' => 'Images',
                         'multiple' => true
                     ]);
                 }
@@ -59,7 +73,6 @@ class TrickType extends AbstractType
             $builder
                 ->add('videos', CollectionType::class, [
                     'entry_type'   => VideoType::class,
-                    'label' => 'Entrer une URL Youtue ou Daylimotion',
                     'entry_options' => ['label' => false],
                     'allow_add'    => true,
                     'allow_delete' => true,
@@ -70,7 +83,6 @@ class TrickType extends AbstractType
             $builder
                 ->add('videos', CollectionType::class, [
                     'entry_type'   => VideoType::class,
-                    'label' => 'Entrer une URL Youtue ou Daylimotion',
                     'entry_options' => ['label' => false],
                     'allow_add'    => true,
                     'allow_delete' => true,
@@ -86,10 +98,6 @@ class TrickType extends AbstractType
             'allow_extra_fields' => true,
             'createdAt' => null,
         ]);
-        $resolver->setRequired(
-            array(
-                'status'
-            )
-        );
+        $resolver->setRequired(['status']);
     }
 }

@@ -142,6 +142,10 @@ ul {
   display: none;
 }
 
+legend {
+  display: none;
+}
+
 .videos {
   padding: 0;
 

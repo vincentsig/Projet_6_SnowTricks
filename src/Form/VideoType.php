@@ -17,7 +17,9 @@ class VideoType extends AbstractType
         $builder
             ->add('url', TextType::class, [
                 'required' => false,
-                'label' => 'Entrer une URL Youtube ou Daylimotion',
+                'attr' => [
+                    'placeholder' => 'Enter une URL Youtube ou Daylimotion',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez saisir une url'
@@ -25,7 +27,7 @@ class VideoType extends AbstractType
                     new Regex([
                         'pattern' => '#(http|https)://(www.youtube.com|www.dailymotion.com)/#',
                         'match' => 'true',
-                        'message' => 'Veuillez entrer un lien Youtube ou Daylimotion'
+                        'message' => 'Votre lien n\'est pas valide',
                     ]),
                 ],
             ]);

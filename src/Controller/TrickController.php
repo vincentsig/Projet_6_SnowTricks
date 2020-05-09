@@ -64,11 +64,12 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $files = $trick->getImageFiles();
-            foreach ($files as $file) {
-                $fileName = $fileUploader->upload($file, $trick);
-                $trick->AddImage($fileName);
+            if ($files) {
+                foreach ($files as $file) {
+                    $fileName = $fileUploader->upload($file, $trick);
+                    $trick->AddImage($fileName);
+                }
             }
-
             $this->em->persist($trick);
             $this->em->flush();
 
