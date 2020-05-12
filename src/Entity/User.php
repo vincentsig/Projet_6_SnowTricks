@@ -86,8 +86,6 @@ class User implements UserInterface
      */
     private $profile;
 
-
-
     /**
      * A visual identifier that represents this user.
      *

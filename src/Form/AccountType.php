@@ -50,6 +50,7 @@ class AccountType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Profile::class,
+            'translation_domain' => false,
         ]);
     }
 }

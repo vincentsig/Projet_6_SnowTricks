@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProfileRepository")
@@ -110,24 +111,14 @@ class Profile
         return $this;
     }
 
-    /**
-     * Get the value of avatar
-     */
     public function getAvatar()
     {
         return $this->avatar;
     }
 
-    /**
-     * Set the value of avatar
-     *
-     * @return  self
-     */
-    public function setAvatar($avatar)
+    public function setAvatar(UploadedFile $avatar = null)
     {
         $this->avatar = $avatar;
-
-        return $this;
     }
 
     public function getPresentation(): ?string

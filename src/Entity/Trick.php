@@ -45,14 +45,12 @@ class Trick
      */
     private $imageList;
 
-
     /**  
      * @Assert\All({
      * @Assert\Image
      *  }) 
      */
     private $imageFiles;
-
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -221,7 +219,6 @@ class Trick
                 $comment->setTrick(null);
             }
         }
-
         return $this;
     }
 

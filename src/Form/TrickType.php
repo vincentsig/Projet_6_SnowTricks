@@ -34,7 +34,8 @@ class TrickType extends AbstractType
             ->add('category', EntityType::class, array(
                 'class' => Category::class,
                 'choice_label' => 'getName',
-                'placeholder' => 'Choisissez un groupe de figure', 'label' => 'Groupe',
+                'placeholder' => 'Choisissez un groupe de figure',
+                'label' => 'Groupe',
             ))
 
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -54,8 +55,7 @@ class TrickType extends AbstractType
                                 'message' => 'Vous devez au moins ajouter une image'
                             ])
                         ],
-                        'required' => false,
-                        'multiple' => true
+                        'multiple' => true,
                     ]);
                 } else {
                     // if the trick object exist already ImageFiles can be Blank.
@@ -65,7 +65,7 @@ class TrickType extends AbstractType
                             'placeholder' => 'Veuillez choisir une image de type .jpg, .jpeg ou .png '
                         ],
                         'required' => false,
-                        'multiple' => true
+                        'multiple' => true,
                     ]);
                 }
             });
@@ -97,6 +97,7 @@ class TrickType extends AbstractType
             'data_class' => Trick::class,
             'allow_extra_fields' => true,
             'createdAt' => null,
+            'translation_domain' => false,
         ]);
         $resolver->setRequired(['status']);
     }

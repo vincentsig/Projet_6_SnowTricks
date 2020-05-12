@@ -60,7 +60,7 @@ class ImageController extends AbstractController
      * @Route("/{id}",
      *      name="cover_delete",
      *      methods={"DELETE"})
-     * @isGranted("ROLE_ADMIN")
+     * @isGranted("ROLE_USER")
      */
     public function deleteCover(Request $request, Image $image,  FileUploader $uploader): Response
     {

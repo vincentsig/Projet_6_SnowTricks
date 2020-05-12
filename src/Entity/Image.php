@@ -24,6 +24,7 @@ class Image
     private $filename;
 
     /*
+     * 
      * @Assert\NotBlank(message="Veuillez ajouter une photo.")
      * @Assert\Image(
      * mimeTypes={"image/jpeg", "image/png", "image/jpg"},
@@ -44,7 +45,6 @@ class Image
     {
         return $this->id;
     }
-
 
     /**
      * @return UploadedFile
