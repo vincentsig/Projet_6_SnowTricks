@@ -21,9 +21,7 @@ class VideoType extends AbstractType
                     'placeholder' => 'Enter une URL Youtube ou Daylimotion',
                 ],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir une url'
-                    ]),
+
                     new Regex([
                         'pattern' => '#(http|https)://(www.youtube.com|www.dailymotion.com)/#',
                         'match' => 'true',

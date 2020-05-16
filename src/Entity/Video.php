@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VideoRepository")
@@ -18,6 +19,11 @@ class Video
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @Assert\Regex(
+     *     pattern="#^(http|https)://(www.youtube.com|youtu.be|www.dailymotion.com|dai.ly)/#",
+     *     match=true,
+     *     message="Le lien n'est pas valide"
+     * )
      */
     private $url;
 
@@ -36,6 +42,7 @@ class Video
         return $this->url;
     }
 
+
     public function setUrl(?string $url): self
     {
         //check if it's a youtube or daylimotion video
@@ -51,6 +58,8 @@ class Video
 
         return $this;
     }
+
+
 
     public function getTrick(): ?Trick
     {

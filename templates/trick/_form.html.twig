@@ -18,10 +18,13 @@
 
 {% elseif 'edit' in status %}
 	<ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
-		<li>{{ form_row(form.videos) }}</li>
-	</ul>
+		{% for video in form.videos %}
 
-	<button class="btn btn-success ml-2 float-right">{{ button_label|default('Sauvegarder') }}</button>
+			<li>{{ form_row(video.url) }}</li>
 
-{% endif %}
-{{ form_end(form) }}
+		{% endfor %}
+
+		<button class="btn btn-success ml-2 float-right">{{ button_label|default('Sauvegarder') }}</button>
+
+	{% endif %}
+	{{ form_end(form) }}

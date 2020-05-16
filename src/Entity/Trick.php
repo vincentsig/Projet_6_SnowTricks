@@ -70,6 +70,7 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", cascade={"persist", "remove"})
+     * @Assert\Valid
      */
     private $videos;
 

@@ -77,7 +77,7 @@ class ImageController extends AbstractController
 
 
     /**
-     * @Route("/{id}/editImage/",
+     * @Route("/editImage/{id}",
      *      name="edit_image",
      *      methods={"GET","POST"})
      * @isGranted("ROLE_USER")

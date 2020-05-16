@@ -83,7 +83,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/show/{id}/{slug}",
+     * @Route("/show/{slug}/{id}",
      *      name="trick_show",
      *      methods={"GET", "POST"})
      */
@@ -119,7 +119,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}/{slug}",
+     * @Route("/edit/{slug}/{id}",
      *      name="trick_edit",
      *      methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
@@ -127,6 +127,7 @@ class TrickController extends AbstractController
     public function edit(Request $request, Trick $trick, FileUploader $fileUploader): Response
     {
         $status = ['status' => 'edit'];
+
         $form = $this->createForm(TrickType::class, $trick, $status); //ajouter option
         $form->handleRequest($request);
 
@@ -149,6 +150,7 @@ class TrickController extends AbstractController
         }
         return $this->render('trick/edit.html.twig', [
             'trick' => $trick,
+            'id' => $trick->getId(),
             'form' => $form->createView(),
             'status' => $status,
         ]);

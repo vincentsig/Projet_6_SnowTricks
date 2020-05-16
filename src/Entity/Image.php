@@ -20,19 +20,12 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
+     * 
      */
     private $filename;
 
     /*
-     * 
-     * @Assert\NotBlank(message="Veuillez ajouter une photo.")
-     * @Assert\Image(
-     * mimeTypes={"image/jpeg", "image/png", "image/jpg"},
-     * mimeTypesMessage="L'image doit avoir une extension .jpeg .jpg ou .png",
-     * allowPortrait = false,
-     * allowPortraitMessage = " Les images en portrait ne sont pas acceptés,veuillez choisir un format paysage"
-     * ) 
-     * 
+     * @var UploadedFile
      */
     private $file;
 
