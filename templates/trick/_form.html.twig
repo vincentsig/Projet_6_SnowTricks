@@ -5,26 +5,15 @@
 {{ form_row(form.category) }}
 {{ form_row(form.imageFiles) }}
 
+<ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
 
-{% if 'new' in status %}
-	<ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
-		{% for video in form.videos %}
+	{% for video in form.videos %}
+		<li>{{ form_row(video.url) }}</li>
 
-			<li>{{ form_row(video.url) }}</li>
+	{% endfor %}
 
-		{% endfor %}
-	</ul>
-	<button class="btn btn-success float-right">{{ button_label|default('Sauvegarder') }}</button>
+</ul>
 
-{% elseif 'edit' in status %}
-	<ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
-		{% for video in form.videos %}
+<button class="btn btn-success ml-2 float-right">{{ button_label|default('Sauvegarder') }}</button>
 
-			<li>{{ form_row(video.url) }}</li>
-
-		{% endfor %}
-
-		<button class="btn btn-success ml-2 float-right">{{ button_label|default('Sauvegarder') }}</button>
-
-	{% endif %}
-	{{ form_end(form) }}
+{{ form_end(form) }}

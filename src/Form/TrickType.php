@@ -69,26 +69,15 @@ class TrickType extends AbstractType
                     ]);
                 }
             });
-        if ($options['status'] == 'new') {
-            $builder
-                ->add('videos', CollectionType::class, [
-                    'entry_type'   => VideoType::class,
-                    'entry_options' => ['label' => false],
-                    'allow_add'    => true,
-                    'allow_delete' => true,
-                    'by_reference' => false,
-                ]);
-        }
-        if ($options['status'] == 'edit') {
-            $builder
-                ->add('videos', CollectionType::class, [
-                    'entry_type'   => VideoType::class,
-                    'entry_options' => ['label' => false],
-                    'allow_add'    => true,
-                    'allow_delete' => true,
-                    'by_reference' => false,
-                ]);
-        }
+
+        $builder
+            ->add('videos', CollectionType::class, [
+                'entry_type'   => VideoType::class,
+                'entry_options' => ['label' => false],
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -99,6 +88,5 @@ class TrickType extends AbstractType
             'createdAt' => null,
             'translation_domain' => false,
         ]);
-        $resolver->setRequired(['status']);
     }
 }

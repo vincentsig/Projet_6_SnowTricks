@@ -34,9 +34,9 @@ jQuery(document).ready(function () {
     $collectionHolder = $("ul.videos");
 
     // add a delete link to all of the existing tag form li elements
-    /*$collectionHolder.find('li.').each(function () {
+    $collectionHolder.find('li.test').each(function () {
         addVideoFormDeleteLink($(this));
-    });*/
+    });
 
     // add the "add a video" anchor and li to the videos ul
     $collectionHolder.append($newLinkLi);
@@ -73,7 +73,7 @@ function addVideoForm($collectionHolder, $newLinkLi) {
     $collectionHolder.data("index", index + 1);
 
     // Display the form in the page in an li, before the "Add a video" link li
-    var $newFormLi = $("<li></li>").append(newForm);
+    var $newFormLi = $("<li class='test'></li>").append(newForm);
     $newLinkLi.before($newFormLi);
 
     // add a delete link to the new form
@@ -83,7 +83,6 @@ function addVideoForm($collectionHolder, $newLinkLi) {
 function addVideoFormDeleteLink($videoFormLi) {
     var $removeFormButton = $('<button type="button" class="btn btn-danger">Supprimer le champs</button>');
     $videoFormLi.append($removeFormButton);
-
     $removeFormButton.on("click", function (e) {
         // remove the li for the video form
         $videoFormLi.remove();

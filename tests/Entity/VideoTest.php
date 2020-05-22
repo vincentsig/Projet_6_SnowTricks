@@ -5,7 +5,6 @@ namespace Tests\Entity;
 use App\Entity\Video;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-
 class VideoTest extends KernelTestCase
 {
     /*
@@ -14,9 +13,8 @@ class VideoTest extends KernelTestCase
     */
     public function getEntity(): Video
     {
-
         return (new Video())
-            ->setUrl('https://www.youtube.com/watch?v=AzJPhQdTRQQ');
+            ->setUrl('https://www.youtube.com/watch?v=AzJPhQdgTRQQ');
     }
 
     /*
@@ -27,8 +25,12 @@ class VideoTest extends KernelTestCase
     public function assertHasErrors(Video $video, int $number = 0)
     {
         self::bootKernel();
-        $error = self::$container->get('validator')->validate($video);
-        $this->assertCount($number, $error);
+        $errors = self::$container->get('validator')->validate($video);
+        $messages = [];
+        foreach ($errors as $error) {
+            $messages[] = $error->getPropertyPath() . '=>' . $error->getMessage();
+        }
+        $this->assertCount($number, $errors, implode(', ', $messages));
     }
 
     /*
@@ -40,7 +42,7 @@ class VideoTest extends KernelTestCase
     }
 
     /*
-    * 
+    * Test if it's a valid Daylimotion video
     */
     public function testvalidEntityVideoDaylimotion()
     {
@@ -48,17 +50,45 @@ class VideoTest extends KernelTestCase
     }
 
     /*
+    * Test if it's a valid Youtube video
+    */
+    public function testvalidEntityYoutube()
+    {
+        $this->assertHasErrors($this->getEntity()->setUrl('https://www.youtube.com/watch?v=n0F6hSpxaFc'), 0);
+    }
+
+    /*
+    * Test Invalid Random Url
+    */
+    public function testInvalidRandomUrl()
+    {
+        $this->assertHasErrors($this->getEntity()->setUrl('https://openclassrooms.com/fr'), 1);
+    }
+
+    /*
     * The Url must be a video link from youtube or daylimotion
     */
-    public function testvalidEntityVideoUrl()
+    public function testInvalidEntityVideoUrl()
     {
-        $this->assertHasErrors($this->getEntity()->setUrl('this is not a url daylimotion or youtube'), 1);
+        $this->assertHasErrors($this->getEntity()->setUrl('this is not a daylimotion or youtube URL'), 1);
     }
+
     /*
     * The Url can be null
     */
     public function testvalidEntityVideoNull()
     {
         $this->assertHasErrors($this->getEntity()->setUrl(''), 0);
+    }
+
+    /*
+    * Slug The url Set into a Embed url in the Database
+    */
+    public function testSluggerUrl()
+    {
+        $video = new Video();
+        $video->setUrl('https://www.youtube.com/watch?v=AzJPhQdTRQQ');
+
+        $this->assertSame($video->getUrl(), 'https://www.youtube.com/embed/AzJPhQdTRQQ');
     }
 }

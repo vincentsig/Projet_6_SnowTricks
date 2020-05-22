@@ -22,7 +22,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\Length(min="8", minMessage="Votre pseudo doit au minimum contenir 8 caractères")
+     * @Assert\Length(
+     *      min=8,
+     *      minMessage="Votre pseudo doit au minimum contenir 8 caractères",
+     *      max = 50,
+     *      maxMessage="Votre pseudo ne peut pas contenir plus de 50 caractères",
+     *      allowEmptyString = false,
+     * )
      * @Assert\NotBlank()
      */
     private $username;
@@ -41,7 +47,14 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\Length(min="8", minMessage="Votre mot de passe doit contenir au minimum 8 caractères")
+     * @Assert\Length(
+     *      min=8,
+     *      minMessage="Votre mot de passe doit au minimum contenir 8 caractères",
+     *      maxMessage="Votre mot de passe ne peut pas contenir plus de 50 caractères",
+     *      max = 50,
+     *      allowEmptyString = false,
+     * )
+     * 
      */
     private $password;
 
@@ -117,7 +130,7 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles = null): self
     {
         $this->roles = $roles;
 
@@ -173,7 +186,7 @@ class User implements UserInterface
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(\DateTimeInterface $createdAt = null): self
     {
         $this->createdAt = $createdAt;
 
@@ -201,7 +214,7 @@ class User implements UserInterface
      *
      * @return  string
      */
-    public function getConfirmationToken()
+    public function getConfirmationToken(): string
     {
         return $this->confirmationToken;
     }

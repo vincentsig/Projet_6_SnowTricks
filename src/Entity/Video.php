@@ -18,7 +18,7 @@ class Video
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      * @Assert\Regex(
      *     pattern="#^(http|https)://(www.youtube.com|youtu.be|www.dailymotion.com|dai.ly)/#",
      *     match=true,
@@ -42,7 +42,6 @@ class Video
         return $this->url;
     }
 
-
     public function setUrl(?string $url): self
     {
         //check if it's a youtube or daylimotion video
@@ -58,8 +57,6 @@ class Video
 
         return $this;
     }
-
-
 
     public function getTrick(): ?Trick
     {

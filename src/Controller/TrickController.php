@@ -53,13 +53,10 @@ class TrickController extends AbstractController
      */
     public function new(Request $request, FileUploader $fileUploader): Response
     {
-        $status = [
-            'status' => 'new'
-        ];
         $trick = new Trick();
 
         $trick->setCreatedAt(new DateTime());
-        $form = $this->createForm(TrickType::class, $trick, $status);
+        $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -78,7 +75,6 @@ class TrickController extends AbstractController
         return $this->render('trick/new.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
-            'status' => $status
         ]);
     }
 
@@ -97,7 +93,6 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setAuthor($user)
-                ->setCreatedAt(new DateTime())
                 ->setTrick($trick);
 
             $this->em->persist($comment);
@@ -126,9 +121,7 @@ class TrickController extends AbstractController
      */
     public function edit(Request $request, Trick $trick, FileUploader $fileUploader): Response
     {
-        $status = ['status' => 'edit'];
-
-        $form = $this->createForm(TrickType::class, $trick, $status); //ajouter option
+        $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -145,14 +138,12 @@ class TrickController extends AbstractController
                 'trick' => $trick,
                 'id' => $trick->getId(),
                 'slug' => $trick->getSlug(),
-
             ]);
         }
         return $this->render('trick/edit.html.twig', [
             'trick' => $trick,
             'id' => $trick->getId(),
             'form' => $form->createView(),
-            'status' => $status,
         ]);
     }
 

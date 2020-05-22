@@ -53,6 +53,8 @@ class Image
     public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
+
+        return $this;
     }
 
     public function getTrick(): ?Trick

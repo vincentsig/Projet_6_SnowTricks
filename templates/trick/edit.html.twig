@@ -78,20 +78,17 @@
 							{% if loop.index0 is divisible by(3) %}
 								<section class="row mb-2  ">
 								{% endif %}
-
 								<article class="col-md-12 col-lg-4">
 									<div class="embed-responsive embed-responsive-4by3">
 										<iframe width="560" height="315" src="{{ video.url }}" alt="video-trick" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 									</div>
 									<div class="editIcon-editTrick d-flex justify-content-end flex align-items-center">
-										{% if video.id %}
-											<a href="{{ path('edit_video', {'id': video.id}) }}">
-												<i class="far fa-edit fa-lg mt-1" title="modifier"></i>
-											</a>
 
-											<!-- Show delete icon -->
-											{{ include('trick/_delete_video_form.html.twig') }}
-										{% endif %}
+										<a href="{{ path('edit_video', {'id': video.id}) }}">
+											<i class="far fa-edit fa-lg mt-1" title="modifier"></i>
+										</a>
+										<!-- Show delete icon -->
+										{{ include('trick/_delete_video_form.html.twig') }}
 									</div>
 								</article>
 								{% if loop.index is divisible by(3) or loop.last %}
@@ -106,13 +103,11 @@
 		<div class="container-fluid px-5" id="anchorDetails">
 			<button class="display-button btn btn-primary mx-auto my-4" type="button">Voir plus de contenus
 			</button>
-
 			<h2>Modifier les informations</h2>
 			<hr>
 		</div>
 
 		<div class="container my-4 trickForm-ctn">
-
 			<div class="mt-4">
 				{{ include('trick/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 				{% include 'trick/_delete_form.html.twig' with {'icon':false} %}

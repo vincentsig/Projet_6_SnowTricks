@@ -22,6 +22,7 @@ class Trick
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false,  unique=true)
+     * @Assert\ NotBlank
      */
     private $name;
 
@@ -70,7 +71,6 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", cascade={"persist", "remove"})
-     * @Assert\Valid
      */
     private $videos;
 
@@ -169,18 +169,6 @@ class Trick
         return $this;
     }
 
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(?string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
     public function getCategory(): ?Category
     {
         return $this->category;
@@ -243,7 +231,6 @@ class Trick
         return $this;
     }
 
-
     public function addImage($filename)
     {
         $image = new Image();
@@ -278,6 +265,18 @@ class Trick
                 $video->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
