@@ -28,13 +28,9 @@ class CategoryTypeTest extends TypeTestCase
     public function testSubmitValidData()
     {
 
-
-
         $formData = [
             'name' => 'Ollie',
             'description' => 'description'
-
-
         ];
 
         $objectToCompare = new Category();

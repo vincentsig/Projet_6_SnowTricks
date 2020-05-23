@@ -5,10 +5,8 @@ namespace Tests\Entity;
 use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-
 class CategoryTest extends KernelTestCase
 {
-
     /*
     * Create a new EntityTest
     * @return Category

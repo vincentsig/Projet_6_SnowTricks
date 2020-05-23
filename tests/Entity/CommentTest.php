@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Entity\Comment;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-
 class CommentTest extends KernelTestCase
 {
     /*
