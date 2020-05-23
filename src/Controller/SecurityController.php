@@ -47,7 +47,7 @@ class SecurityController extends AbstractController
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user   
+        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
@@ -156,21 +156,18 @@ class SecurityController extends AbstractController
         \Swift_Mailer $mailer,
         TokenGeneratorInterface $tokenGenerator
     ): Response {
-
         $form = $this->createForm(ForgottenPasswordType::class);
         $form->handleRequest($request);
 
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $email = $form->get('email')->getData();
 
             $user = $this->repository->findOneByEmail($email);
             /* @var $user User */
 
             if ($user === null) {
-
                 $this->addFlash('success', 'Email Inconnu');
                 return $this->redirectToRoute('app_login');
             }
@@ -218,7 +215,6 @@ class SecurityController extends AbstractController
         $user = $this->repository->findOneByResetToken($token);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $user = $this->repository->findOneByResetToken($token);
 
             if ($user === null) {

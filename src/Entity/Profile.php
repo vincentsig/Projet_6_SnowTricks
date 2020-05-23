@@ -39,7 +39,7 @@ class Profile
     private $avatarFileName;
 
     /**
-     * 
+     *
      */
     private $avatar;
 

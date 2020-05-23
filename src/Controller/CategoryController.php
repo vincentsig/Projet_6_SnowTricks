@@ -30,7 +30,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("/new",
      *      name="category_new",
-     *      methods={"GET","POST"})     
+     *      methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -39,7 +39,6 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->em->persist($category);
             $this->em->flush();
 

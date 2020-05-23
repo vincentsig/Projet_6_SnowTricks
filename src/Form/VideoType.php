@@ -12,7 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-
 class VideoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -22,7 +21,6 @@ class VideoType extends AbstractType
                 $video = $event->getData();
                 $form = $event->getForm();
                 if ($video  && $video->getId() !== null) {
-
                     $form->add('url', HiddenType::class, [
                         'attr' => [
                             'placeholder' => 'Enter une URL Youtube ou Daylimotion',

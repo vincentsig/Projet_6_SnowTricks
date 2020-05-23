@@ -6,10 +6,8 @@ use App\Entity\User;
 use App\Entity\Profile;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-
 class UserTest extends KernelTestCase
 {
-
     protected $profile;
 
     public function setUp(): void

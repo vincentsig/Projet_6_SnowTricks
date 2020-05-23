@@ -2,7 +2,6 @@
 
 namespace App\Tests\Form\Type;
 
-
 use App\Entity\Video;
 use App\Form\VideoType;
 use Symfony\Component\Validator\Validation;
@@ -27,7 +26,6 @@ class VideoTypeTest extends TypeTestCase
 
     public function testSubmitValidData()
     {
-
         $formData = [
             'url' => 'https://www.youtube.com/watch?v=AzJPhQdTRQQ',
         ];

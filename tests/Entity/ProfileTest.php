@@ -5,7 +5,6 @@ namespace Tests\Entity;
 use App\Entity\Profile;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-
 class ProfileTest extends KernelTestCase
 {
     /*

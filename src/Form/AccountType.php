@@ -11,8 +11,6 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-
-
 class AccountType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)

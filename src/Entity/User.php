@@ -40,7 +40,6 @@ class User implements UserInterface
 
     public function __construct()
     {
-
         $this->comments = new ArrayCollection();
     }
 
@@ -54,7 +53,7 @@ class User implements UserInterface
      *      max = 50,
      *      allowEmptyString = false,
      * )
-     * 
+     *
      */
     private $password;
 
@@ -222,7 +221,7 @@ class User implements UserInterface
     /**
      * Set token for confirmation password
      *
-     * @param  string  $confirmationToken  
+     * @param  string  $confirmationToken
      *
      */
     public function setConfirmationToken(?string $confirmationToken)

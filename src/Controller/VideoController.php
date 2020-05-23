@@ -30,7 +30,7 @@ class VideoController extends AbstractController
      *      name="video_delete",
      *      methods={"DELETE"})
      * @isGranted("ROLE_USER")
-     * 
+     *
      */
     public function deleteVideo(Request $request, Video $video, TrickRepository $trickRepository): Response
     {
@@ -38,7 +38,6 @@ class VideoController extends AbstractController
         $trick = $trickRepository->findOneByid($trickId);
 
         if ($this->isCsrfTokenValid('delete' . $video->getId(), $request->request->get('_token'))) {
-
             $this->em->remove($video);
             $this->em->flush();
         }
@@ -62,7 +61,6 @@ class VideoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->em->persist($video);
             $this->em->flush();
 

@@ -40,7 +40,6 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $file = $form->get('avatar')->getData();
             if ($file) {
                 $avatarfile = $profile->getAvatarFileName();

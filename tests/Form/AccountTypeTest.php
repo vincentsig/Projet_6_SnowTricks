@@ -26,7 +26,6 @@ class AccountTypeTest extends TypeTestCase
 
     public function testSubmitValidData()
     {
-
         $formData = [
             'firstname' => 'firstname',
             'lastname' => 'lastname',

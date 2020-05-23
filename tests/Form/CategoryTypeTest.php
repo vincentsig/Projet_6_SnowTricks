@@ -2,7 +2,6 @@
 
 namespace App\Tests\Form\Type;
 
-
 use App\Entity\Category;
 use App\Form\CategoryType;
 use Symfony\Component\Validator\Validation;
@@ -27,7 +26,6 @@ class CategoryTypeTest extends TypeTestCase
 
     public function testSubmitValidData()
     {
-
         $formData = [
             'name' => 'Ollie',
             'description' => 'description'

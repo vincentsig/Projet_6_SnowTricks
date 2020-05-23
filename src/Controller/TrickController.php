@@ -168,7 +168,7 @@ class TrickController extends AbstractController
 
     /**
      * Get the 5 next comments in the database and create a Twig file with them that will be displayed via Javascript
-     * 
+     *
      * @Route("/{id}/{start}",
      *      name="loadMoreComments",
      *      requirements={"start": "\d+"})

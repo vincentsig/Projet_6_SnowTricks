@@ -35,7 +35,7 @@ class ImageController extends AbstractController
      *      name="image_delete",
      *      methods={"DELETE"})
      * @isGranted("ROLE_USER")
-     * 
+     *
      */
     public function deleteImage(Request $request, Image $image, TrickRepository $trickRepository, FileUploader $uploader): Response
     {
@@ -62,7 +62,7 @@ class ImageController extends AbstractController
      *      methods={"DELETE"})
      * @isGranted("ROLE_USER")
      */
-    public function deleteCover(Request $request, Image $image,  FileUploader $uploader): Response
+    public function deleteCover(Request $request, Image $image, FileUploader $uploader): Response
     {
         $filename = $image->getFilename();
 

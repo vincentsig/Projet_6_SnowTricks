@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class ResetPasswordType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -22,10 +21,5 @@ class ResetPasswordType extends AbstractType
                 'second_options' => array('label' => 'Repeat Password'),
                 'invalid_message' => 'Les champs ne correspondent pas',
             ));
-           
-
     }
- 
-
-
 }

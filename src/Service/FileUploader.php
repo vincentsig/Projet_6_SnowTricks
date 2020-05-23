@@ -55,7 +55,6 @@ class FileUploader
         $this->targetDirectory = $this->targetDirectoryTrick;
         $filesystem = new Filesystem();
         foreach ($filesname as $file) {
-
             $filename = $file->getFilename();
             $filesystem->remove($this->getTargetDirectory() . '/' . $filename);
         }

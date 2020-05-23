@@ -7,7 +7,6 @@ use App\Entity\Trick;
 use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-
 class TrickTest extends KernelTestCase
 {
 
@@ -58,7 +57,7 @@ class TrickTest extends KernelTestCase
 
 
     /*
-    * Test the slugger during the setting of nameTrick 
+    * Test the slugger during the setting of nameTrick
     */
     public function testSlug()
     {

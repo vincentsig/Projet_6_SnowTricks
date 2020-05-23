@@ -2,7 +2,6 @@
 
 namespace App\Tests\Form\Type;
 
-
 use App\Entity\User;
 use App\Form\ResetPasswordType;
 use Symfony\Component\Validator\Validation;

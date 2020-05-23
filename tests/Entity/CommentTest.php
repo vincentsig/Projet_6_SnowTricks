@@ -43,7 +43,7 @@ class CommentTest extends KernelTestCase
     }
 
     /*
-    * The Content must be a string 
+    * The Content must be a string
     */
     public function testvalidEntityComment()
     {

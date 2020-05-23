@@ -9,7 +9,6 @@ use App\Form\CommentType;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
-use Symfony\Component\Validator\Constraints\Date;
 
 class CommentTypeTest extends TypeTestCase
 {
