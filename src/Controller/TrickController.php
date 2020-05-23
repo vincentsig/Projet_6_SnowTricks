@@ -69,6 +69,7 @@ class TrickController extends AbstractController
             }
             $this->em->persist($trick);
             $this->em->flush();
+            $this->addFlash('success', 'Votre Trick à bien été enregistré');
 
             return $this->redirectToRoute('home');
         }
@@ -97,7 +98,7 @@ class TrickController extends AbstractController
 
             $this->em->persist($comment);
             $this->em->flush();
-
+            $this->addFlash('success', 'Votre commentaire à été publié');
             return $this->redirectToRoute('trick_show', [
                 'id' => $trick->getId(),
                 'category' => $trick->getCategory(),
@@ -133,6 +134,7 @@ class TrickController extends AbstractController
             }
             $this->em->persist($trick);
             $this->em->flush();
+            $this->addFlash('success', 'Votre Trick à bien été modifié');
 
             return $this->redirectToRoute('trick_show', [
                 'trick' => $trick,
