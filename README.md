@@ -8,6 +8,7 @@ The main constraint, was to not use any external Bundles during the develpment e
 
 ## Code quality
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e654ff11b147484aaeb3edc9e1534021)](https://www.codacy.com/manual/vincentsig/Projet_6_SnowTricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vincentsig/Projet_6_SnowTricks&amp;utm_campaign=Badge_Grade)
 
 ## Information
 
