@@ -31,7 +31,7 @@ The main constraint, was to not use any external Bundles during the develpment e
 
 ## Installation
 
-**1. Download and clone the github repositoy:**  
+**1. Download or clone the github repository:**  
 
       https://github.com/vincentsig/Projet_6_SnowTricks.git
 
