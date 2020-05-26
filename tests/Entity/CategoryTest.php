@@ -14,7 +14,7 @@ class CategoryTest extends KernelTestCase
     public function getEntity(): Category
     {
         return (new Category())
-            ->setName('Ollie')
+            ->setName('slide')
             ->setDescription('coucou');
     }
     /*
@@ -59,6 +59,6 @@ class CategoryTest extends KernelTestCase
     */
     public function testInvalidEntityCategoryNotUnique()
     {
-        $this->assertHasErrors($this->getEntity()->setName('Slide'), 1);
+        $this->assertHasErrors($this->getEntity()->setName('One foot'), 1);
     }
 }
