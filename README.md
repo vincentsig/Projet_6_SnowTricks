@@ -23,16 +23,6 @@ You can also participate to improve the content of the tricks by adding some new
 - Symfony 4.4.8
 - Apache 2.4.35
 - MySQL 5.7.23
-- Axios 0.19.2
-- Bootstrap 4.4.1
-- Core-js 3.6.4
-- Font-awesome 4.7.0
-- Jquery 3.4.1
-- Lightbox2 2.11.1
-- Popper.js 1.16.1
-- Symfony/webpack-encore 0.27.0
-- Webpack-notifier 1.8.0
-
 
 ## Installation
 
