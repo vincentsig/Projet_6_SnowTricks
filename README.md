@@ -1,6 +1,12 @@
 # Projet_6_SnowTricks
 
+## Information
+
 SnowTrick is a collaborative website to introduce snowboarding to the general public and help them to have a better knowloedge of the different tricks.
+
+You just have to create your account and when you are log-in you have the possibility to add some new snow tricks. That's the point! We want you to collaborate with the community to promote the visibility of this amazing sport to the public. 
+You can also participate to improve the content of the tricks by adding some new pictures or youtube and daylimotion videos. And you know what, you can even add your own media if you have some nice footage!!
+
 
 ## Introduction
 This is my first Symfony projects of my apprenticeship training with OpenClassrooms .
@@ -10,7 +16,6 @@ The main constraint, was to not use any external Bundles during the develpment e
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e654ff11b147484aaeb3edc9e1534021)](https://www.codacy.com/manual/vincentsig/Projet_6_SnowTricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vincentsig/Projet_6_SnowTricks&amp;utm_campaign=Badge_Grade)
 
-## Information
 
 
 ## Development environment 
@@ -70,10 +75,11 @@ The main constraint, was to not use any external Bundles during the develpment e
       
 ## Enjoy !
 
-  Now you can use the application. If you have load the fixtures you can use the users account to add, edit, or delete some Tricks.You can also post comments.  
-     login: username-1 password: password
-            username-2 password: password 
-            etc...
+  Now you can use the application. If you have load the fixtures you can use the users account already created.
+     login:    
+     username-1 password: password    
+     username-2 password: password    
+     etc...
       
 
       
