@@ -45,7 +45,6 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 5; $i++) {
             $profile = new Profile();
             $profile->setFirstname($faker->firstName)
-                ->setFirstname($faker->lastName)
                 ->setLastname($faker->lastName)
                 ->setPresentation($faker->paragraph(5))
                 ->setAvatarFileName($faker->randomElement($avatarFilenames));
