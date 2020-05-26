@@ -13,6 +13,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class TrickType extends AbstractType
@@ -23,13 +24,13 @@ class TrickType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, [
+            ->add('name', TextType::class, [
                 'label' => 'Nom',
                 'attr' => [
                     'placeholder' => 'Saisissez le nom de la figure',
                 ]
             ])
-            ->add('description', null, [
+            ->add('description', TextType::class, [
                 'attr' => [
                     'placeholder' => 'Decrivez les spécificités de la figure',
                 ]
