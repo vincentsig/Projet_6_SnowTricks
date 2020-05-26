@@ -17,6 +17,9 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class TrickType extends AbstractType
 {
+    /*
+    *{@inheritdoc}
+    */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
