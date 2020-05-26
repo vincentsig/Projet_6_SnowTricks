@@ -38,7 +38,6 @@ class AppFixtures extends Fixture
         ];
         $categoriesDemoName = ['Grabs', 'Rotations', 'Flips', 'Rotations désaxées', 'Slides', 'One foot', 'Old school'];
         $tricksDemoName = ['Mute', 'Indy', '360', '720', 'Backflip', 'Misty', 'Tail slide', 'Method air', 'Backside air'];
-        $imageFileNames = ['default.jpg', 'fixture-1.jpg', 'fixture-2.jpg', 'fixture-3.jpg', 'fixture-4.jpg', 'fixture-5.jpg', 'fixture-6.jpg'];
         $avatarFilenames = ['fixture-1.jpg', 'fixture-2.jpg', 'fixture-3.jpg', 'fixture-4.jpg',];
 
         // Create Profile
@@ -83,15 +82,15 @@ class AppFixtures extends Fixture
                 ->setCategory($faker->randomElement($categories));
 
             //Images
-            for ($k = 1; $k < 5; $k++) {
+            for ($k = 1; $k < 7; $k++) {
                 $image = new Image();
-                $image->setFilename($faker->randomElement($imageFileNames))
+                $image->setFilename(($trick->getName() . '-' . $k . '.jpg'))
                     ->setTrick($trick);
 
                 $em->persist($image);
             }
             // Videos
-            for ($l = 0; $l < mt_rand(1, 4); $l++) {
+            for ($l = 0; $l < mt_rand(1, 5); $l++) {
                 $video = new Video();
                 $video->setUrl($faker->randomElement($videoDemo))
                     ->setTrick($trick);
