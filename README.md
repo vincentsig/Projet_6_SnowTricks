@@ -75,7 +75,7 @@ The main constraint, was to not use any external Bundles during the develpment e
       
 ## Enjoy !
 
-  Now you can use the application. If you have load the fixtures you can use the users account already created.
+  Now you can use the application. If you have load the fixtures you can use the users account already created.  
      login:    
      username-1 password: password    
      username-2 password: password    
