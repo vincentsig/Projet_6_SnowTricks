@@ -82,12 +82,23 @@ class VideoTest extends KernelTestCase
     }
 
     /*
-    * Slug The url Set into a Embed url in the Database
+    * Slug the url Set into a Embed url in the Database
     */
     public function testSluggerUrl()
     {
         $video = new Video();
         $video->setUrl('https://www.youtube.com/watch?v=AzJPhQdTRQQ');
+
+        $this->assertSame($video->getUrl(), 'https://www.youtube.com/embed/AzJPhQdTRQQ');
+    }
+
+    /*
+    * Slug the iframe to only get the embed url Database
+    */
+    public function testSluggerWithEmbedUrl()
+    {
+        $video = new Video();
+        $video->setUrl('<iframe width="560" height="315" src="https://www.youtube.com/embed/AzJPhQdTRQQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
 
         $this->assertSame($video->getUrl(), 'https://www.youtube.com/embed/AzJPhQdTRQQ');
     }
