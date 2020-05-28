@@ -44,7 +44,7 @@ You can also participate to improve the content of the tricks by adding some new
 
 **5. Configure the .env**
 
-      DATABASE_URL=mysql: //db_user:db_password@127.0.0.1:3306/db_name
+      DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 
 **6. Create the Database**
 
