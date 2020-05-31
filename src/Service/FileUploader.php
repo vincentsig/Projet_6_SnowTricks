@@ -2,8 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\Image;
-use App\Entity\Trick;
 use App\Entity\Profile;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

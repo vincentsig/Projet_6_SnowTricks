@@ -99,21 +99,21 @@ class SecurityController extends AbstractController
             if ($user === null) {
                 $this->addFlash('success', 'Token Inconnu, veuillez créer un compte valide');
                 return $this->redirectToRoute('home');
-            } else {
-                $user = $this->repository->findOneByConfirmationToken($token);
-                $user->setCreatedAt(new \DateTime());
-
-                $user->setConfirmationToken(null);
-                $this->em->flush();
-                $this->addFlash('success', 'votre compte à bien été validé');
-                //login after validation of the ConfirmationToken
-                return $guardHandler->authenticateUserAndHandleSuccess(
-                    $user,          // the User object you just created
-                    $request,
-                    $authenticator, // authenticator whose onAuthenticationSuccess you want to use
-                    'main'          // the name of your firewall in security.yaml
-                );
             }
+
+            $user = $this->repository->findOneByConfirmationToken($token);
+            $user->setCreatedAt(new \DateTime());
+
+            $user->setConfirmationToken(null);
+            $this->em->flush();
+            $this->addFlash('success', 'votre compte à bien été validé');
+            //login after validation of the ConfirmationToken
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,          // the User object you just created
+                $request,
+                $authenticator, // authenticator whose onAuthenticationSuccess you want to use
+                'main'          // the name of your firewall in security.yaml
+            );
         } elseif ($form->isSubmitted() && $form->isValid()) {
             $token = $tokenGenerator->generateToken();
             $user->setConfirmationToken($token);
