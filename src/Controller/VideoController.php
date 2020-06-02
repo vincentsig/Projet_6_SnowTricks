@@ -55,9 +55,14 @@ class VideoController extends AbstractController
      */
     public function editVideo(Request $request, Video $video, TrickRepository $trickRepository)
     {
+        /* $status is passed to the form as an options to disable the hiddenType */
+        $status = [
+            'status' => 'single'
+        ];
+
         $trickId = $video->getTrick();
         $trick = $trickRepository->findOneByid($trickId);
-        $form = $this->createForm(VideoType::class, $video);
+        $form = $this->createForm(VideoType::class, $video, $status);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -72,6 +77,7 @@ class VideoController extends AbstractController
         return $this->render('trick/editVideo.html.twig', [
             'video' => $video,
             'form' => $form->createView(),
+            'status' => $status,
         ]);
     }
 }

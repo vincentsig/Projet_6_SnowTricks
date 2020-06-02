@@ -122,6 +122,7 @@ class TrickController extends AbstractController
      */
     public function edit(Request $request, Trick $trick, FileUploader $fileUploader): Response
     {
+
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 

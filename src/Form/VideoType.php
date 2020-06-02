@@ -19,39 +19,58 @@ class VideoType extends AbstractType
     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-                $video = $event->getData();
-                $form = $event->getForm();
-                if ($video  && $video->getId() !== null) {
-                    $form->add('url', HiddenType::class, [
-                        'attr' => [
-                            'placeholder' => 'Enter une URL Youtube ou Daylimotion',
-                        ],
-                        'constraints' => [
-                            new Regex([
-                                'pattern' => '#(http|https)://(www.youtube.com|www.dailymotion.com)/#',
-                                'match' => 'true',
-                                'message' => 'Votre lien n\'est pas valide',
-                            ]),
-                        ],
-                    ]);
-                } else {
-                    $form->add('url', TextType::class, [
+        /* only for editing one video */
+        if ($options['status'] == 'single') {
+            $builder
+                ->add('url', TextType::class, [
 
-                        'attr' => [
-                            'placeholder' => 'Enter une URL Youtube ou Daylimotion',
-                        ],
-                        'constraints' => [
-                            new Regex([
-                                'pattern' => '#(http|https)://(www.youtube.com|www.dailymotion.com)/#',
-                                'match' => 'true',
-                                'message' => 'Votre lien n\'est pas valide',
-                            ]),
-                        ],
-                    ]);
-                }
-            });
+                    'attr' => [
+                        'placeholder' => 'Enter une URL Youtube ou Daylimotion',
+                    ],
+                    'constraints' => [
+                        new Regex([
+                            'pattern' => '#(http|https)://(www.youtube.com|www.dailymotion.com)/#',
+                            'match' => 'true',
+                            'message' => 'Votre lien n\'est pas valide',
+                        ]),
+                    ],
+                ]);
+        } else {
+            /* hide fields on the existing URL */
+            $builder
+                ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                    $video = $event->getData();
+                    $form = $event->getForm();
+                    if ($video  && $video->getId() !== null) {
+                        $form->add('url', HiddenType::class, [
+                            'attr' => [
+                                'placeholder' => 'Enter une URL Youtube ou Daylimotion',
+                            ],
+                            'constraints' => [
+                                new Regex([
+                                    'pattern' => '#(http|https)://(www.youtube.com|www.dailymotion.com)/#',
+                                    'match' => 'true',
+                                    'message' => 'Votre lien n\'est pas valide',
+                                ]),
+                            ],
+                        ]);
+                    } else {
+                        $form->add('url', TextType::class, [
+
+                            'attr' => [
+                                'placeholder' => 'Enter une URL Youtube ou Daylimotion',
+                            ],
+                            'constraints' => [
+                                new Regex([
+                                    'pattern' => '#(http|https)://(www.youtube.com|www.dailymotion.com)/#',
+                                    'match' => 'true',
+                                    'message' => 'Votre lien n\'est pas valide',
+                                ]),
+                            ],
+                        ]);
+                    }
+                });
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -59,6 +78,7 @@ class VideoType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Video::class,
             'translation_domain' => false,
+            'status' => null,
         ]);
     }
 }

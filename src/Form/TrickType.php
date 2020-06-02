@@ -91,6 +91,7 @@ class TrickType extends AbstractType
             'allow_extra_fields' => true,
             'createdAt' => null,
             'translation_domain' => false,
+            'status' => null,
         ]);
     }
 }
