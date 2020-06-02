@@ -10,14 +10,11 @@
 	<div class="container mt-5">
 		<h2>Modifier une vidéo</h2>
 		{{ include('trick/_video_form.html.twig', {'button_label': 'Modifier'}) }}
-		
-	{% if form.vars.valid  %}
-		<div class="embed-responsive embed-responsive-4by3 mt-3">
-			<iframe width="560" height="315" src="{{ video.url }}" alt="trick-video" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-		</div>
+
+		{% if form.vars.valid  %}
+			<div class="embed-responsive embed-responsive-4by3 mt-3">
+				<iframe width="560" height="315" src="{{ video.url }}" alt="trick-video" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			</div>
 		{% endif %}
 	</div>
-	<pre>
-	 {{ dump() }}
- </pre>
 {% endblock %}
