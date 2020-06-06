@@ -72,7 +72,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Votre identidiant n\'a pas été trouvé.');
+            throw new CustomUserMessageAuthenticationException('password ou identifiant invalide');
         }
         //check if the account have been validated with the CreatedAt field
         $validated = $user->getCreatedAt();

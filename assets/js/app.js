@@ -132,6 +132,7 @@ function loadMoreComments(event) {
     start = 5 * click;
     const url = path + start;
     axios.get(url).then(function (response) {
+        //json response.data
         jQuery("#comments").append(response.data);
     });
     lastClick();
