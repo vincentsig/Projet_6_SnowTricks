@@ -8,8 +8,7 @@
 // any CSS you. require will output into a single css file (app.css in this case)
 require('../css/app.css');
 
-// bootstrap
-require("bootstrap/dist/css/bootstrap.css");
+
 
 // lightbox2
 require("lightbox2/dist/css/lightbox.css");
@@ -17,7 +16,16 @@ require("lightbox2/dist/js/lightbox-plus-jquery.js");
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 const $ = require("jquery");
+
+// bootstrap
+require("bootstrap");
+require("bootstrap/dist/css/bootstrap.css");
+//require("bootstrap/js/dist/collapse.js");
+
+//axios
 import axios from "axios";
+
+
 
 // fontawesome
 
