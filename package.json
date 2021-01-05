@@ -18,7 +18,7 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.4.0",
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "font-awesome": "^4.7.0",
         "lightbox2": "^2.11.1"
     }
